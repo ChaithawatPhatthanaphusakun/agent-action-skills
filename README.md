@@ -17,7 +17,7 @@ repositories.
 Skills live in `~/.claude/skills/`. Copy in the ones you want:
 
 ```bash
-git clone https://github.com/iampon-p/claude-skills.git time-machine-skills
+git clone https://github.com/iampon-p/skills.git time-machine-skills
 cp -r time-machine-skills/security-check ~/.claude/skills/
 ```
 

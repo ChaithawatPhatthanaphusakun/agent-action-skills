@@ -1,13 +1,14 @@
 # Time Machine Skills
 
-Ten agent skills for [Claude Code](https://claude.com/claude-code) and Codex. Each one takes a task
+Nine agent skills for [Claude Code](https://claude.com/claude-code) and Codex. Each one takes a task
 you do by hand and gives you the time back.
 
 They are not prompt templates. Each skill is a written procedure the agent follows, and
 several ship real scripts that run with no LLM tokens at all.
 
-An eleventh, [`job-hunter`](https://github.com/iampon-p/job-hunter), lives in its own
-repository.
+Two more—[`edit-video`](https://github.com/iampon-p/edit-video) and
+[`job-hunter`](https://github.com/iampon-p/job-hunter)—live in their own public
+repositories.
 
 ---
 
@@ -16,22 +17,24 @@ repository.
 Skills live in `~/.claude/skills/`. Copy in the ones you want:
 
 ```bash
-git clone https://github.com/iampon-p/skills.git time-machine-skills
+git clone https://github.com/iampon-p/claude-skills.git time-machine-skills
 cp -r time-machine-skills/security-check ~/.claude/skills/
 ```
 
 Restart Claude Code. The skill is then available as `/security-check`.
 
-Install all ten:
+Install all nine bundled skills:
 
 ```bash
 cp -r time-machine-skills/*/ ~/.claude/skills/
 ```
 
-`job-hunter` installs the same way from its own repository:
+Standalone skills install from their own repositories:
 
 ```bash
+git clone https://github.com/iampon-p/edit-video.git
 git clone https://github.com/iampon-p/job-hunter.git
+cp -r edit-video ~/.claude/skills/
 cp -r job-hunter ~/.claude/skills/
 ```
 
@@ -50,7 +53,7 @@ cp -r job-hunter ~/.claude/skills/
 | [`sumup`](sumup/) | Closes out a session: what happened, what broke, what fixed it, plus a handoff prompt so the next session starts where this one stopped. | Optional `$VAULT` |
 | [`today-obsidian`](today-obsidian/) | Builds today's task list by carrying forward unfinished work from yesterday's notes and your git history. Idempotent — safe to re-run. | `$VAULT` |
 | [`fixbill`](fixbill/) | Fixes addresses, dates and invoice numbers on Thai and English PDF invoices. | [fixbill-cli](https://github.com/iampon-p/fixbill-cli) |
-| [`edit-video`](edit-video/) | Turn raw footage into captioned, music-backed vertical reels. Cut clips to music beats, transcribe speech, render final MP4 + cut-list. | `ffmpeg`, `mlx-whisper` (Apple Silicon) |
+| [`edit-video`](https://github.com/iampon-p/edit-video) | *(separate repository.)* Turn raw footage into captioned, music-backed vertical reels. Cut clips to music beats, transcribe speech, render final MP4 + cut-list. | `ffmpeg`, `mlx-whisper` (Apple Silicon) |
 | [`job-hunter`](https://github.com/iampon-p/job-hunter) | *(separate repository.)* Finds and scores jobs, prepares truthful applications, drives browser-based forms, and tracks outreach and follow-ups with approval gates. | Agent Browser; Playwright and email connector optional |
 
 ---

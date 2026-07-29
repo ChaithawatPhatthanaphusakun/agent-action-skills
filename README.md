@@ -1,10 +1,13 @@
 # Time Machine Skills
 
-Eleven agent skills for [Claude Code](https://claude.com/claude-code) and Codex. Each one takes a task
+Ten agent skills for [Claude Code](https://claude.com/claude-code) and Codex. Each one takes a task
 you do by hand and gives you the time back.
 
 They are not prompt templates. Each skill is a written procedure the agent follows, and
 several ship real scripts that run with no LLM tokens at all.
+
+An eleventh, [`job-hunter`](https://github.com/iampon-p/job-hunter), lives in its own
+repository.
 
 ---
 
@@ -19,10 +22,17 @@ cp -r time-machine-skills/security-check ~/.claude/skills/
 
 Restart Claude Code. The skill is then available as `/security-check`.
 
-Install all eleven:
+Install all ten:
 
 ```bash
 cp -r time-machine-skills/*/ ~/.claude/skills/
+```
+
+`job-hunter` installs the same way from its own repository:
+
+```bash
+git clone https://github.com/iampon-p/job-hunter.git
+cp -r job-hunter ~/.claude/skills/
 ```
 
 ---
@@ -41,7 +51,7 @@ cp -r time-machine-skills/*/ ~/.claude/skills/
 | [`today-obsidian`](today-obsidian/) | Builds today's task list by carrying forward unfinished work from yesterday's notes and your git history. Idempotent — safe to re-run. | `$VAULT` |
 | [`fixbill`](fixbill/) | Fixes addresses, dates and invoice numbers on Thai and English PDF invoices. | [fixbill-cli](https://github.com/iampon-p/fixbill-cli) |
 | [`edit-video`](edit-video/) | Turn raw footage into captioned, music-backed vertical reels. Cut clips to music beats, transcribe speech, render final MP4 + cut-list. | `ffmpeg`, `mlx-whisper` (Apple Silicon) |
-| [`job-hunter`](job-hunter/) | Finds and scores jobs, prepares truthful applications, drives browser-based forms, and tracks outreach and follow-ups with approval gates. | Agent Browser; Playwright and email connector optional |
+| [`job-hunter`](https://github.com/iampon-p/job-hunter) | *(separate repository.)* Finds and scores jobs, prepares truthful applications, drives browser-based forms, and tracks outreach and follow-ups with approval gates. | Agent Browser; Playwright and email connector optional |
 
 ---
 
@@ -82,12 +92,8 @@ Most skills need nothing. Two read a notes directory:
 |---|---|---|---|
 | `$VAULT` | `sumup`, `today-obsidian` | `~/notes` | `sumup` prints to the terminal instead. `today-obsidian` stops and tells you to set it. |
 | `$ACTIVE_REPOS` | `today-obsidian` | `~/work/active` | Git-activity signal is skipped; the run still succeeds. |
-| `$JOB_HUNTER_PROFILE` | `job-hunter` | None | The skill asks for or creates a private candidate profile. |
-| `$JOB_HUNTER_LEDGER` | `job-hunter` | None | The skill asks where to keep the private application ledger. |
 
 Skills that can publish, submit, or send data follow their own approval policy.
-`job-hunter` keeps personal data outside this repository and defaults to review
-before external actions.
 
 ---
 
@@ -96,7 +102,7 @@ before external actions.
 I kept building a new skill instead of extending one I already had — 71 folders grown from
 about 15 real ideas, and only a quarter of them ever used twice.
 
-These eleven are the ones that survived. Each is here because I reached for it again.
+These are the ones that survived. Each is here because I reached for it again.
 
 `skill-creator` now opens by asking whether an existing skill should be extended instead.
 That check is the most useful thing in this repo.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Job Hunter"
+  short_description: "Find, tailor, apply, and follow up safely"
+  default_prompt: "Use $job-hunter to find matching jobs, prepare truthful applications, and track follow-ups."

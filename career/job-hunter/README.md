@@ -11,21 +11,21 @@ boundaries, and tracks submissions and follow-ups in a private ledger.
 Discover jobs across original company sources, reject hard blockers early, and
 rank the remaining roles with explainable scores.
 
-![Research workflow: discover, filter, and score jobs](assets/workflow-research.gif)
+![Research workflow: discover, filter, and score jobs](https://raw.githubusercontent.com/iampon-p/job-hunter/main/assets/workflow-research.gif)
 
 ### 2. Tailor and review
 
 Build an evidence set from the candidate's real resume and portfolio, tailor the
 application, then stop before submission unless stored approval rules allow it.
 
-![Review workflow: verify evidence, tailor, and pause for approval](assets/workflow-review.gif)
+![Review workflow: verify evidence, tailor, and pause for approval](https://raw.githubusercontent.com/iampon-p/job-hunter/main/assets/workflow-review.gif)
 
 ### 3. Verify and follow up
 
 Treat submission as complete only after confirmation, record it in the private
 ledger, and prepare due follow-ups without sending stale messages.
 
-![Follow-up workflow: verify submission, update ledger, and prepare follow-up](assets/workflow-follow-up.gif)
+![Follow-up workflow: verify submission, update ledger, and prepare follow-up](https://raw.githubusercontent.com/iampon-p/job-hunter/main/assets/workflow-follow-up.gif)
 
 ## Modes
 

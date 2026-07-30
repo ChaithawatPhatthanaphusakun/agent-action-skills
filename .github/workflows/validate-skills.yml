@@ -24,14 +24,14 @@ jobs:
       - name: Smoke-test installer from fresh checkout
         run: |
           target="$(mktemp -d)"
-          python3 scripts/install-skill.py engineering/security-check --dest "$target"
-          if python3 scripts/install-skill.py engineering/security-check --dest "$target"; then
+          python3 scripts/install-skill.py tools/security-check --dest "$target"
+          if python3 scripts/install-skill.py tools/security-check --dest "$target"; then
             echo "installer overwrote an existing target" >&2
             exit 1
           fi
       - name: Security scan with no high findings
         run: |
-          python3 engineering/security-check/scripts/security_scan.py . | tee /tmp/security-scan.txt
+          python3 tools/security-check/scripts/security_scan.py . | tee /tmp/security-scan.txt
           if grep -q "🔴" /tmp/security-scan.txt; then
             echo "high-severity security finding" >&2
             exit 1

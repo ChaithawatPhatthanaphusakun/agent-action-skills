@@ -12,7 +12,7 @@ uses symlinks or deletes files.
 ```bash
 git clone https://github.com/iampon-p/skills.git
 cd skills
-python3 scripts/install-skill.py engineering/security-check --dest "$HOME/.claude/skills"
+python3 scripts/install-skill.py tools/security-check --dest "$HOME/.claude/skills"
 ```
 
 List available install paths:
@@ -25,15 +25,9 @@ python3 scripts/list-skills.py
 
 | Category | Purpose |
 | --- | --- |
-| `engineering` | Development, debugging, QA, and skill authoring |
-| `productivity` | Focused working practices |
-| `personal` | Personal workflows that require local configuration |
-| `media` | Media-production workflows |
-| `documents` | Document-processing workflows |
+| `tools` | Development, debugging, QA, security, skill authoring, and daily working workflows |
 | `career` | Evidence-backed career workflows |
-| `intelligence` | Reserved for reviewed research workflows |
-| `in-progress` | Incubating, not-yet-curated workflows |
-| `deprecated` | Retired workflows retained for reference |
+| `make` | Workflows that produce artifacts: video guides, edited video, document/PDF correction |
 
 See [SKILLS.md](SKILLS.md) for the inventory and [CONTEXT.md](CONTEXT.md) for
 the public/private boundary.

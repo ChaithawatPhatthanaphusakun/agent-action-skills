@@ -1,0 +1,38 @@
+name: Validate skills
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: python3 scripts/validate-skills.py .
+      - run: python3 scripts/test_repository_tools.py
+      - run: python3 scripts/list-skills.py --format table
+      - run: python3 career/linkedin-process-share/scripts/test_build_review_packet.py
+      - run: python3 career/job-hunter/scripts/test_job_hunter.py
+      - name: Smoke-test installer from fresh checkout
+        run: |
+          target="$(mktemp -d)"
+          python3 scripts/install-skill.py engineering/security-check --dest "$target"
+          if python3 scripts/install-skill.py engineering/security-check --dest "$target"; then
+            echo "installer overwrote an existing target" >&2
+            exit 1
+          fi
+      - name: Security scan with no high findings
+        run: |
+          python3 engineering/security-check/scripts/security_scan.py . | tee /tmp/security-scan.txt
+          if grep -q "🔴" /tmp/security-scan.txt; then
+            echo "high-severity security finding" >&2
+            exit 1
+          fi

@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Process Share"
+  short_description: "Build immutable, privacy-safe post previews"
+  default_prompt: "Use $linkedin-process-share to create a review-only LinkedIn process-post packet from an audited iampon-p public repository."

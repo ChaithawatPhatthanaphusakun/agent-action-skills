@@ -3,7 +3,10 @@ __pycache__/
 .DS_Store
 .venv/
 node_modules/
+.coverage
+dist/
+build/
 
-# edit-video lives in its own repo (github.com/iampon-p/edit-video).
-# Never symlink it in here — the link dangles for anyone who clones.
-edit-video
+# Local installation targets and generated review artifacts never belong here.
+.installed-skills/
+review_packet.json

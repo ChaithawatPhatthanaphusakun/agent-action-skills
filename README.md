@@ -1,15 +1,15 @@
 # Time Machine Skills
 
-Eight agent skills for [Claude Code](https://claude.com/claude-code) and Codex. Each one takes a task
-you do by hand and gives you the time back.
+Eight bundled agent skills for [Claude Code](https://claude.com/claude-code) and Codex, plus
+four standalone projects. Each one takes a task you do by hand and gives you the time back.
 
 They are not prompt templates. Each skill is a written procedure the agent follows, and
 several ship real scripts that run with no LLM tokens at all.
 
-Three more—[`edit-video`](https://github.com/iampon-p/edit-video),
+Four larger skills—[`edit-video`](https://github.com/iampon-p/edit-video),
+[`video-doc-guide`](https://github.com/iampon-p/video-doc-guide),
 [`job-hunter`](https://github.com/iampon-p/job-hunter), and
-[`fixbill-cli`](https://github.com/iampon-p/fixbill-cli)—live in their own public
-repositories.
+[`fixbill-cli`](https://github.com/iampon-p/fixbill-cli)—live in their own public repositories.
 
 ---
 
@@ -34,8 +34,10 @@ Standalone skills install from their own repositories:
 
 ```bash
 git clone https://github.com/iampon-p/edit-video.git
+git clone https://github.com/iampon-p/video-doc-guide.git
 git clone https://github.com/iampon-p/job-hunter.git
 cp -r edit-video ~/.claude/skills/
+cp -r video-doc-guide ~/.claude/skills/
 cp -r job-hunter ~/.claude/skills/
 ```
 
@@ -45,18 +47,47 @@ For Fixbill, follow the standalone project's [installation guide](https://github
 
 ## The skills
 
+### Code
+
 | Skill | What it saves you | Needs setup? |
 |---|---|---|
 | [`security-check`](security-check/) | Scans code for hardcoded secrets and dangerous patterns before you push. **Zero LLM tokens** — pure regex, standard library only. | No |
-| [`diagnose`](diagnose/) | A discipline for hard bugs: reproduce → minimise → hypothesise → instrument → fix → regression-test. Stops the guess-and-check spiral. | No |
-| [`design-an-interface`](design-an-interface/) | Generates several genuinely different designs for the same module in parallel, then compares them. From *"Design It Twice"* in *A Philosophy of Software Design*. | No |
-| [`qa`](qa/) | You describe bugs in plain language; it explores the codebase for context and files GitHub issues in the project's own vocabulary. | `gh` CLI |
-| [`caveman`](caveman/) | Strips filler from every reply. Cuts token use roughly 75% with no loss of technical detail. | No |
-| [`skill-creator`](skill-creator/) | Scaffolds a new skill — and first checks whether an existing skill should just be extended instead. | No |
-| [`sumup`](sumup/) | Closes out a session: what happened, what broke, what fixed it, plus a handoff prompt so the next session starts where this one stopped. | Optional `$VAULT` |
-| [`today-obsidian`](today-obsidian/) | Builds today's task list by carrying forward unfinished work from yesterday's notes and your git history. Idempotent — safe to re-run. | `$VAULT` |
-| [`edit-video`](https://github.com/iampon-p/edit-video) | *(separate repository.)* Turn raw footage into captioned, music-backed vertical reels. Cut clips to music beats, transcribe speech, render final MP4 + cut-list. | `ffmpeg`, `mlx-whisper` (Apple Silicon) |
-| [`job-hunter`](https://github.com/iampon-p/job-hunter) | *(separate repository.)* Finds and scores jobs, prepares truthful applications, drives browser-based forms, and tracks outreach and follow-ups with approval gates. | Agent Browser; Playwright and email connector optional |
+| [`diagnose`](diagnose/) | Reproduce → minimise → hypothesise → instrument → fix → regression-test. Stops the guess-and-check spiral. | No |
+| [`qa`](qa/) | Turns plain-language bug reports into GitHub issues using the project's own vocabulary. | `gh` CLI |
+| [`skill-creator`](skill-creator/) | Scaffolds a skill after checking whether an existing one should be extended. | No |
+
+### Design
+
+| Skill | What it saves you | Needs setup? |
+|---|---|---|
+| [`design-an-interface`](design-an-interface/) | Generates genuinely different designs for one module in parallel, then compares them. | No |
+
+### Utilities
+
+| Skill | What it saves you | Needs setup? |
+|---|---|---|
+| [`caveman`](caveman/) | Strips filler from every reply. Cuts token use roughly 75% without losing technical detail. | No |
+| [`sumup`](sumup/) | Closes a session with results, failures, fixes, and a next-session handoff. | Optional `$VAULT` |
+| [`today-obsidian`](today-obsidian/) | Builds today's task list from unfinished notes and Git history. | `$VAULT` |
+
+### Media and documentation
+
+| Skill | What it saves you | Needs setup? |
+|---|---|---|
+| [`edit-video`](https://github.com/iampon-p/edit-video) | **Standalone.** Turns raw footage into captioned, music-backed vertical reels. | `ffmpeg`, `mlx-whisper` |
+| [`video-doc-guide`](https://github.com/iampon-p/video-doc-guide) | **Standalone.** Produces privacy-safe, evidence-driven product walkthrough videos. | Capture adapter and renderer |
+
+### Career
+
+| Skill | What it saves you | Needs setup? |
+|---|---|---|
+| [`job-hunter`](https://github.com/iampon-p/job-hunter) | **Standalone.** Finds and scores jobs, prepares truthful applications, drives forms, and tracks outreach. | Agent Browser; optional Playwright and email |
+
+### Business
+
+| Skill | What it saves you | Needs setup? |
+|---|---|---|
+| [`fixbill-cli`](https://github.com/iampon-p/fixbill-cli) | **Standalone.** Fixes addresses, dates, invoice numbers, and logos on Thai PDF invoices. | Follow project installation guide |
 
 ---
 

@@ -34,7 +34,7 @@ class RepositoryToolTests(unittest.TestCase):
             directory = self.root / category
             directory.mkdir()
             (directory / "README.md").write_text(f"# {category}\n", encoding="utf-8")
-        package = self.root / "tools" / "example-skill"
+        package = self.root / "dev" / "example-skill"
         package.mkdir()
         (package / "SKILL.md").write_text(
             "---\nname: example-skill\ndescription: Example test skill.\n---\n\n# Example\n",
@@ -43,7 +43,7 @@ class RepositoryToolTests(unittest.TestCase):
         (self.root / "SKILLS.md").write_text(
             "# Inventory\n\n| Install path | Status | Dependencies | Notes |\n"
             "| --- | --- | --- | --- |\n"
-            "| `tools/example-skill` | curated | none | fixture |\n",
+            "| `dev/example-skill` | curated | none | fixture |\n",
             encoding="utf-8",
         )
 
@@ -68,19 +68,19 @@ class RepositoryToolTests(unittest.TestCase):
 
     def test_rejects_missing_root_doc_unknown_binary_and_inventory_mismatch(self) -> None:
         (self.root / "AGENTS.md").unlink()
-        (self.root / "tools" / "example-skill" / "asset.bin").write_bytes(b"\x00\x01")
+        (self.root / "dev" / "example-skill" / "asset.bin").write_bytes(b"\x00\x01")
         (self.root / "SKILLS.md").write_text("# Inventory\n", encoding="utf-8")
         self.assertEqual(VALIDATOR.main([str(self.root)]), 1)
 
     def test_installer_refuses_source_symlink_and_overwrite(self) -> None:
         destination = Path(self.temp.name) / "installed"
         destination.mkdir()
-        args = ["tools/example-skill", "--root", str(self.root), "--dest", str(destination)]
+        args = ["dev/example-skill", "--root", str(self.root), "--dest", str(destination)]
         self.assertEqual(INSTALLER.main(args), 0)
         self.assertEqual(INSTALLER.main(args), 3)
-        alias = self.root / "tools" / "alias"
-        alias.symlink_to(self.root / "tools" / "example-skill", target_is_directory=True)
-        alias_args = ["tools/alias", "--root", str(self.root), "--dest", str(destination)]
+        alias = self.root / "dev" / "alias"
+        alias.symlink_to(self.root / "dev" / "example-skill", target_is_directory=True)
+        alias_args = ["dev/alias", "--root", str(self.root), "--dest", str(destination)]
         self.assertEqual(INSTALLER.main(alias_args), 2)
 
 

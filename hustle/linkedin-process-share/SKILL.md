@@ -20,7 +20,7 @@ a topic but must never enter the packet, draft, or command input.
 Before writing, run the deterministic gate from the checked-out public repo:
 
 ```bash
-python3 career/linkedin-process-share/scripts/build_review_packet.py \
+python3 hustle/linkedin-process-share/scripts/build_review_packet.py \
   --repo-root /path/to/public-repo \
   --evidence README.md SKILLS.md \
   --draft /path/outside/repo/post-draft.md \

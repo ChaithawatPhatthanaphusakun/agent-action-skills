@@ -9,7 +9,7 @@ import sys
 from pathlib import Path
 
 CATEGORIES = {
-    "tools", "career", "make",
+    "dev", "hustle", "studio",
 }
 REQUIRED_ROOT_DOCS = {
     "README.md", "LICENSE", "AGENTS.md", "CLAUDE.md", "CODEX.md",

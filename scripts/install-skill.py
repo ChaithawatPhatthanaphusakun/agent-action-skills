@@ -27,7 +27,7 @@ def raw_source_has_symlink(root: Path, skill: str) -> bool:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("skill", help="Repository-relative path, e.g. tools/security-check")
+    parser.add_argument("skill", help="Repository-relative path, e.g. dev/security-check")
     parser.add_argument("--dest", required=True, type=Path, help="Existing destination directory")
     parser.add_argument("--root", type=Path, default=Path(__file__).resolve().parents[1])
     args = parser.parse_args(argv)

@@ -1,42 +1,91 @@
-# iampon-p Skills
+<div align="center">
 
-A curated, public-safe collection of reusable agent skills. Each package is a
-portable folder headed by `SKILL.md`; categories are organizational only.
+# 🧰 Skills
 
-## Install one skill
+**A curated, public-safe library of portable agent skills.**
 
-Clone this repository, then install an explicit skill into an explicit skills
-directory. The installer refuses to overwrite an existing destination and never
-uses symlinks or deletes files.
+Drop-in workflows for coding agents — each one a self-contained folder you can install into any agent's skills directory in a single command.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
+![Skills](https://img.shields.io/badge/skills-13-success.svg)
+![Text only](https://img.shields.io/badge/packages-text--only-blue.svg)
+![Public safe](https://img.shields.io/badge/privacy-public--safe-brightgreen.svg)
+
+</div>
+
+---
+
+## What this is
+
+Every skill is a **portable folder headed by a `SKILL.md`** — no build step, no runtime, no lock-in. An agent reads the `SKILL.md`, follows the workflow, and produces the result. Categories (`dev` / `hustle` / `studio`) are organizational only; nothing depends on them at runtime.
+
+Three rules make the whole collection safe to publish and safe to install:
+
+- **Text-only** — no binaries, no vendored media, no secrets. A validator enforces it.
+- **Additive install** — the installer copies into an explicit destination, never overwrites, never symlinks, never deletes.
+- **Public/private boundary** — personal data, customer material, and private paths live outside the repo. See [CONTEXT.md](CONTEXT.md).
+
+## Quick start
 
 ```bash
 git clone https://github.com/iampon-p/skills.git
 cd skills
-python3 scripts/install-skill.py tools/security-check --dest "$HOME/.claude/skills"
-```
 
-List available install paths:
+# Install one skill into your agent's skills directory
+python3 scripts/install-skill.py dev/security-check --dest "$HOME/.claude/skills"
 
-```bash
+# See everything available
 python3 scripts/list-skills.py
 ```
 
-## Categories
+The installer refuses to overwrite an existing destination — so it can never clobber a skill you already have.
 
-| Category | Purpose |
+## The catalog
+
+### 🛠️ `dev` — build, debug, ship
+
+| Skill | What it does |
 | --- | --- |
-| `tools` | Development, debugging, QA, security, skill authoring, and daily working workflows |
-| `career` | Evidence-backed career workflows |
-| `make` | Workflows that produce artifacts: video guides, edited video, document/PDF correction |
+| [`diagnose`](dev/diagnose) | Disciplined debugging loop: reproduce → minimise → hypothesise → fix → regression-test |
+| [`qa`](dev/qa) | Turn conversational bug reports into durable, well-scoped GitHub issues |
+| [`security-check`](dev/security-check) | Zero-token regex scan for secrets, dangerous patterns, and tech-debt markers |
+| [`design-an-interface`](dev/design-an-interface) | Explore several radically different interface shapes before committing |
+| [`skill-creator`](dev/skill-creator) | Scaffold a new, correctly-structured skill package |
+| [`sumup`](dev/sumup) | Wrap up a work session into a clean handoff + next-step summary |
+| [`today-obsidian`](dev/today-obsidian) | Build a daily "cockpit" note that carries forward open tasks |
+| [`caveman`](dev/caveman) | Ultra-compact communication mode — ~75% fewer tokens, full technical accuracy |
 
-See [SKILLS.md](SKILLS.md) for the inventory and [CONTEXT.md](CONTEXT.md) for
-the public/private boundary.
+### 🎯 `hustle` — evidence-backed career
 
-## Validate
+| Skill | What it does |
+| --- | --- |
+| [`job-hunter`](hustle/job-hunter) | Find, evaluate, tailor, apply, and follow up — driven by verified resume evidence and a private ledger |
+| [`linkedin-process-share`](hustle/linkedin-process-share) | Build an immutable, review-only preview of a LinkedIn post before it goes out |
+
+### 🎬 `studio` — produce artifacts
+
+| Skill | What it does |
+| --- | --- |
+| [`video-doc-guide`](studio/video-doc-guide) | Privacy-safe product walkthrough videos with verified markers and captions |
+| [`edit-video`](studio/edit-video) | Cut raw clips, add captions, mix music, render a vertical reel via a local ffmpeg pipeline |
+| [`fixbill`](studio/fixbill) | Correct addresses, dates, and numbers on PDF invoices/receipts (Thai-aware) |
+
+Full inventory with dependencies in [SKILLS.md](SKILLS.md).
+
+## Design principles
+
+Each package is **portable** (copy the folder, it works), **text-only** (auditable at a glance), and **agent-agnostic** (works with any agent that reads `SKILL.md`). The contract is machine-checked:
 
 ```bash
 python3 scripts/validate-skills.py .
 ```
 
-The repository is MIT licensed. Do not add personal data, customer material,
-private paths, credentials, or unreviewed third-party work.
+The validator enforces the folder layout, naming, text-only rule, and the absence of home paths — so a bad package can't merge.
+
+## Contributing
+
+New skills are welcome if they hold the line: text-only, no personal or customer data, no private paths, no credentials, no unreviewed third-party work. Run the validator before opening a PR — CI runs it too.
+
+## License
+
+[MIT](LICENSE). Reuse freely; keep it clean.

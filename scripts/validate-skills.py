@@ -15,7 +15,7 @@ REQUIRED_ROOT_DOCS = {
     "README.md", "LICENSE", "AGENTS.md", "CLAUDE.md", "CODEX.md",
     "CONTEXT.md", "SKILLS.md",
 }
-ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore"}
+ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore", ".gitmodules"}
 ALLOWED_ROOT_DIRECTORIES = CATEGORIES | {".github", "scripts", ".git"}
 PACKAGE_CHILDREN = {"SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests"}
 TEXT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".sh", ".txt"}
@@ -76,6 +76,10 @@ def package_paths(root: Path, errors: list[str]) -> list[Path]:
                 continue
             packages.append(child)
             for item in child.iterdir():
+                # A package may be a git submodule (its own repo): skip the
+                # submodule bookkeeping files it carries.
+                if item.name in {".git", ".gitignore", ".gitmodules"}:
+                    continue
                 if item.name not in PACKAGE_CHILDREN:
                     add(errors, f"unapproved package child: {rel(root, item)}")
     return sorted(packages)

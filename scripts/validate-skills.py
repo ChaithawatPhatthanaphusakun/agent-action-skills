@@ -24,7 +24,7 @@ PRIVATE_CONTENT = re.compile(
     r"(?:claude-skills-private|private backup|internal-only|confidential customer)",
     re.IGNORECASE,
 )
-STALE_FIXBILL = re.compile(r"github\.com/iampon-p/fixbill(?!-(?:cli|skill))", re.IGNORECASE)
+STALE_FIXBILL = re.compile(r"github\.com/iampon-p/fixbill(?!-cli)", re.IGNORECASE)
 LABELED_SECRET = re.compile(
     r"(?:api[_ -]?key|secret|password|(?:access[_ -]?)?token)\s*[:=]\s*[\"']?([A-Za-z0-9_./+-]{8,})",
     re.IGNORECASE,

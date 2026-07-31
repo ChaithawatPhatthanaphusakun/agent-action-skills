@@ -8,15 +8,12 @@ import re
 import sys
 from pathlib import Path
 
-CATEGORIES = {
-    "dev", "hustle", "studio",
-}
 REQUIRED_ROOT_DOCS = {
     "README.md", "LICENSE", "AGENTS.md", "CLAUDE.md", "CODEX.md",
     "CONTEXT.md", "SKILLS.md",
 }
 ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore", ".gitmodules"}
-ALLOWED_ROOT_DIRECTORIES = CATEGORIES | {".github", "scripts", ".git"}
+ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"}
 PACKAGE_CHILDREN = {"SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests"}
 TEXT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".sh", ".txt"}
 NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -58,30 +55,22 @@ def ignored(path: Path) -> bool:
 
 def package_paths(root: Path, errors: list[str]) -> list[Path]:
     packages: list[Path] = []
-    for category in sorted(CATEGORIES):
-        category_dir = root / category
-        if not category_dir.is_dir():
-            add(errors, f"missing category directory: {category}")
+    for child in sorted(root.iterdir()):
+        if child.name in ALLOWED_ROOT_DIRECTORIES:
             continue
-        if not (category_dir / "README.md").is_file():
-            add(errors, f"missing category README: {category}/README.md")
-        for child in category_dir.iterdir():
-            if child.name == "README.md":
+        if not child.is_dir():
+            continue
+        if not (child / "SKILL.md").is_file():
+            add(errors, f"root directory must be a skill package with SKILL.md: {rel(root, child)}")
+            continue
+        packages.append(child)
+        for item in child.iterdir():
+            # A package may be a git submodule (its own repo): skip the
+            # submodule bookkeeping files it carries.
+            if item.name in {".git", ".gitignore", ".gitmodules"}:
                 continue
-            if not child.is_dir():
-                add(errors, f"category may contain only README.md and package directories: {rel(root, child)}")
-                continue
-            if not (child / "SKILL.md").is_file():
-                add(errors, f"package must be one level below its category: {rel(root, child)}")
-                continue
-            packages.append(child)
-            for item in child.iterdir():
-                # A package may be a git submodule (its own repo): skip the
-                # submodule bookkeeping files it carries.
-                if item.name in {".git", ".gitignore", ".gitmodules"}:
-                    continue
-                if item.name not in PACKAGE_CHILDREN:
-                    add(errors, f"unapproved package child: {rel(root, item)}")
+            if item.name not in PACKAGE_CHILDREN:
+                add(errors, f"unapproved package child: {rel(root, item)}")
     return sorted(packages)
 
 
@@ -169,7 +158,10 @@ def main(argv: list[str] | None = None) -> int:
         if not (root / document).is_file():
             add(errors, f"missing root document: {document}")
     for item in root.iterdir():
-        if item.name not in ALLOWED_ROOT_FILES and item.name not in ALLOWED_ROOT_DIRECTORIES:
+        if item.is_dir():
+            if item.name not in ALLOWED_ROOT_DIRECTORIES and not (item / "SKILL.md").is_file():
+                add(errors, f"unapproved root entry: {item.name}")
+        elif item.name not in ALLOWED_ROOT_FILES:
             add(errors, f"unapproved root entry: {item.name}")
     for path in root.rglob("*"):
         if not ignored(path) and path.is_symlink():

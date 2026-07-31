@@ -1,3 +1,39 @@
 [submodule "hustle/linkedin-process-share"]
 	path = linkedin-process-share
 	url = https://github.com/iampon-p/linkedin-process-share.git
+[submodule "diagnose"]
+	path = diagnose
+	url = https://github.com/iampon-p/diagnose.git
+[submodule "design-an-interface"]
+	path = design-an-interface
+	url = https://github.com/iampon-p/design-an-interface.git
+[submodule "qa"]
+	path = qa
+	url = https://github.com/iampon-p/qa.git
+[submodule "security-check"]
+	path = security-check
+	url = https://github.com/iampon-p/security-check.git
+[submodule "skill-creator"]
+	path = skill-creator
+	url = https://github.com/iampon-p/skill-creator.git
+[submodule "sumup"]
+	path = sumup
+	url = https://github.com/iampon-p/sumup.git
+[submodule "today-obsidian"]
+	path = today-obsidian
+	url = https://github.com/iampon-p/today-obsidian.git
+[submodule "caveman"]
+	path = caveman
+	url = https://github.com/iampon-p/caveman.git
+[submodule "job-hunter"]
+	path = job-hunter
+	url = https://github.com/iampon-p/job-hunter.git
+[submodule "fixbill"]
+	path = fixbill
+	url = https://github.com/iampon-p/fixbill-skill.git
+[submodule "edit-video"]
+	path = edit-video
+	url = https://github.com/iampon-p/edit-video-skill.git
+[submodule "video-doc-guide"]
+	path = video-doc-guide
+	url = https://github.com/iampon-p/video-doc-guide-skill.git

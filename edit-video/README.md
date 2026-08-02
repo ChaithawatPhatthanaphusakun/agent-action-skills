@@ -1,58 +1,53 @@
 # edit-video
 
-Turn raw footage into captioned, music-backed vertical reels without dragging clips onto a timeline.
+A portable, review-gated workflow for turning user-provided clips into a
+captioned vertical video with a reproducible cut list. Source media stays
+unchanged; previews, music, transcripts, and final renders require explicit
+review at their own gates.
 
-## What it does
+## Included
 
-Takes raw vertical video clips (DJI, iPhone, etc.), cuts them to beats, burns captions via transcription, mixes music, and renders a final MP4. Uses ffmpeg + Pillow for text overlay and mlx-whisper for speech-to-caption transcription. Outputs a machine-readable cut-list so edits are reproducible and tweaks are fast.
+- [SKILL.md](SKILL.md): the tool-neutral editing and approval contract.
+- [Emotion / intent / pacing](references/emotion-intent-pacing.md): observable,
+  explainable signal-to-edit suggestions with privacy first.
+- `scripts/test_fixture_smoke.py`: a synthetic ffmpeg + Pillow smoke test that
+  uses no personal footage.
 
-The workflow is a 5-loop grading process: contact-sheet → cut proposal → preview render → music mix → final render. Each loop has you grade an artifact and the skill advances.
+No footage, music, voice sample, transcript, browser state, private work log,
+or machine-specific runtime workspace is included.
 
-## Example
+## Workflow
 
-**You type:**
+1. Preserve and inventory the original clips.
+2. Grade a contact sheet and timestamped cut proposal.
+3. Grade a low-resolution preview with authored overlays.
+4. Add only approved/licensed music and reviewed speech captions.
+5. Render a new final MP4 plus `cut-list.md` after every prior gate passes.
+
+The model reference suggests keeps, cuts, pauses, captions, zooms, and beat
+alignment from observable evidence. It does not infer a person's private
+emotional state and it never promotes a proposal without human approval.
+
+## Requirements
+
+- Python 3.9+
+- Pillow
+- `ffmpeg` and `ffprobe` on `PATH`
+- An optional, user-approved transcription backend when speech captions are
+  requested
+
+Run the clean-room test:
+
+```bash
+python3 edit-video/scripts/test_fixture_smoke.py
 ```
-/edit-video
-I have 30 minutes of raw footage from a product shoot. Need a 30-45 second vertical reel with captions.
-```
-
-**What happens:**
-
-1. Skill organizes clips into `~/work/active/edit-video/jobs/<job-name>/` and creates a `CLIPS.md` decoder table.
-2. Generates contact-sheet thumbnails of all raw clips, asks you to mark ★ best moments.
-3. Loop 1: Renders cut proposal (numbered thumbnails with in/out marks). You reply "drop clip 4, trim clip 7 to 0:15–0:45".
-4. Loop 2: Low-res preview with text overlays. You grade the flow, reply with second numbers to adjust.
-5. Loop 3: Asks for a music file. Renders preview with music bed, asks "rhythm and energy — A good, B needs tighter cuts, C start over".
-6. Transcribes speech from original audio, shows you the transcript, asks "approve for burn-in?"
-7. Loop 4: Full-res `final.mp4` + human-readable `cut-list.md` with every ffmpeg command.
-8. Shares the final reel.
-
-## Setup
-
-Requires:
-- `ffmpeg` 8.0+ (via `brew install ffmpeg`)
-- Python 3.9+ with `Pillow` and `numpy`
-- `mlx-whisper` for speech transcription — **Apple Silicon (M1/M2/M3) only**. Install via:
-  ```bash
-  pip install mlx-whisper
-  ```
-
-For non-Apple Silicon Macs, use another transcription API (Deepgram, AssemblyAI) or skip speech captions.
 
 ## Install
 
 ```bash
-git clone https://github.com/iampon-p/edit-video.git edit-video-skill
-ln -s "$(pwd)/edit-video-skill" ~/.claude/skills/edit-video
+git clone https://github.com/iampon-p/skills.git
+cd skills
+python3 scripts/install-skill.py edit-video --dest <skills-directory>
 ```
 
-Keep the public skill repository separate from the private runtime workspace:
-
-```text
-~/work/active/
-├── edit-video/          # private footage, music, jobs, and renders
-└── edit-video-skill/    # public skill repository
-```
-
-The included `.gitignore` blocks common footage, audio, render, and runtime
-directories from entering the public repository.
+The installer fails rather than overwriting an existing installation.

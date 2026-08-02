@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧰 Skills
+# 🧰 Agent Action Skills
 
 **A curated, public-safe library of portable agent skills.**
 
@@ -28,8 +28,8 @@ Three rules make the whole collection safe to publish and safe to install:
 ## Quick start
 
 ```bash
-git clone https://github.com/iampon-p/skills.git
-cd skills
+git clone https://github.com/iampon-p/agent-action-skills.git
+cd agent-action-skills
 
 # Install one skill into your agent's skills directory
 python3 scripts/install-skill.py security-check --dest "$HOME/.claude/skills"

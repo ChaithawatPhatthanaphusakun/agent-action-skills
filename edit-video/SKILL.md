@@ -11,6 +11,11 @@ keep source clips, music, jobs, previews, and final renders inside that root.
 
 ## Workflow
 
+Read [Emotion / intent / pacing](references/emotion-intent-pacing.md) before
+the story pass. It defines observable labels, explainable suggestions, privacy
+priority, and versioned human approval without claiming to infer private
+emotional states.
+
 1. Inventory clips and make a contact sheet or timestamped cut proposal.
 2. Get a grade on the proposed story and cuts before rendering a final video.
 3. Render a low-resolution preview with authored overlays. Keep text clear of
@@ -42,3 +47,9 @@ keep source clips, music, jobs, previews, and final renders inside that root.
   been reviewed.
 - Save `final.mp4` and `cut-list.md` in a new job directory; retain previews
   until the user accepts the final result.
+
+## Clean-room check
+
+Run `python3 scripts/test_fixture_smoke.py` before relying on a new installation.
+It creates synthetic media in a temporary directory, renders a caption overlay,
+and verifies the MP4 and cut list without using personal footage.

@@ -15,3 +15,4 @@
 | `edit-video` | curated | local video tools | User-media editing workflow |
 | `fixbill` | curated | separate FixBill CLI | Local PDF correction workflow |
 | `video-doc-guide` | curated | scrcpy, ffmpeg (optional) | Privacy-safe product walkthrough videos |
+| `professional-presence` | curated | none | Privacy-safe professional profile and post management |

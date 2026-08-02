@@ -61,6 +61,7 @@ The installer refuses to overwrite an existing destination — so it can never c
 | --- | --- |
 | [`job-hunter`](job-hunter) | Find, evaluate, tailor, apply, and follow up — driven by verified resume evidence and a private ledger |
 | [`linkedin-process-share`](linkedin-process-share) | Build an immutable, review-only preview of a LinkedIn post before it goes out |
+| [`professional-presence`](professional-presence) | Manage privacy-safe professional profiles, LinkedIn posts, and GitHub identity presentation |
 
 ### 🎬 `studio` — produce artifacts
 

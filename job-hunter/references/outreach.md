@@ -9,7 +9,7 @@ recruiting address.
 Write 80–150 words:
 
 1. specific role and reason for contacting them;
-2. one or two verified, relevant proof points;
+2. one or two verified, relevant impact proof points;
 3. concise fit with the team's problem;
 4. low-pressure call to action;
 5. portfolio/resume link or attachment.

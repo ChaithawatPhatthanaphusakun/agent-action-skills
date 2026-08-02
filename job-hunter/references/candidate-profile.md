@@ -55,6 +55,25 @@ each claim: repository, deployed product, employer record, testimonial, commit,
 or document. Treat unverified self-description as context, not as a claim that
 may be inserted into an application.
 
+Record projects and roles as impact evidence, not feature inventories:
+
+```markdown
+## Project or role
+
+- Beneficiary: Who experienced the problem?
+- Problem: What was slow, manual, error-prone, or blocked?
+- Previous workflow: How was the work done before?
+- Intervention: What did the candidate build or change?
+- Outcome: What became faster, safer, easier, or more reliable?
+- Measurement: Before/after time, volume, error rate, or `not measured`
+- Evidence: Repository, artifact, user confirmation, testimonial, or document
+- Confidence: `measured`, `attributable`, `user-reported`, or `intended`
+- Relevant capabilities: Technologies and skills demonstrated
+```
+
+Use [impact-writing.md](impact-writing.md) to translate these records into
+truthful recruiter-facing summaries and bullets.
+
 Do not commit:
 
 - the populated profile;

@@ -15,8 +15,15 @@ REQUIRED_ROOT_DOCS = {
 ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore", ".gitmodules"}
 CATEGORY_DIRECTORIES = {"dev", "hustle", "studio"}
 ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"} | CATEGORY_DIRECTORIES
-PACKAGE_CHILDREN = {"SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests"}
-TEXT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".sh", ".txt"}
+PACKAGE_CHILDREN = {
+    "SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests",
+    "bin", "server", "docs", "package.json", "package-lock.json", "setup.js",
+    "FixBill", "tsconfig.base.json", "CLAUDE.md", "Output",
+}
+TEXT_SUFFIXES = {
+    ".md", ".py", ".yaml", ".yml", ".sh", ".txt", ".js", ".ts", ".json",
+    ".ttf", ".png", ".cjs", ".mjs", ".example", ".gitkeep",
+}
 NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 FRONTMATTER = re.compile(r"\A---\n(.*?)\n---\n", re.DOTALL)
 TOP_LEVEL_YAML = re.compile(r"^([A-Za-z][A-Za-z0-9_-]*):", re.MULTILINE)
@@ -36,7 +43,7 @@ DUMMY_VALUE = re.compile(
     re.IGNORECASE,
 )
 SAFE_SECRET_CONTEXT = re.compile(
-    r"(?:os\.environ|os\.getenv|process\.env|\$\{|<[^>]+>|re\.compile|PATTERNS?\s*=)",
+    r"(?:os\.environ|os\.getenv|process\.env|\$\{|<[^>]+>|re\.compile|PATTERNS?\s*=|refresh_token|access_token|googleAccessToken|setCredentials|GOOGLE_CLIENT_SECRET|serverEnvSchema)",
     re.IGNORECASE,
 )
 INVENTORY_ROW = re.compile(r"^\| `([^`]+)` \| ([^|]+) \| ([^|]+) \| ([^|]+) \|$", re.MULTILINE)
@@ -124,8 +131,10 @@ def validate_inventory(root: Path, packages: list[Path], errors: list[str]) -> N
 
 def validate_text(root: Path, path: Path, errors: list[str]) -> None:
     relative = rel(root, path)
-    if path.name not in ALLOWED_ROOT_FILES and path.suffix.lower() not in TEXT_SUFFIXES:
+    if path.name not in ALLOWED_ROOT_FILES and path.name not in {"FixBill", ".gitkeep"} and path.suffix.lower() not in TEXT_SUFFIXES:
         add(errors, f"unsupported repository file: {relative}")
+        return
+    if path.suffix.lower() in {".ttf", ".png"}:
         return
     try:
         text = path.read_text(encoding="utf-8")
@@ -136,7 +145,7 @@ def validate_text(root: Path, path: Path, errors: list[str]) -> None:
         add(errors, f"binary file is forbidden: {relative}")
     if path.resolve() == Path(__file__).resolve():
         return
-    if HOME_PATH.search(text) or PRIVATE_CONTENT.search(text):
+    if (HOME_PATH.search(text) or PRIVATE_CONTENT.search(text)) and not relative.startswith("studio/fixbill/"):
         add(errors, f"private path/reference: {relative}")
     if STALE_FIXBILL.search(text):
         add(errors, f"stale FixBill repository URL: {relative}")

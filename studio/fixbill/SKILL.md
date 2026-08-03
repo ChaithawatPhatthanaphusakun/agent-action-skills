@@ -5,13 +5,9 @@ description: Use whenever the user wants to fix a billing address, issue date, i
 
 # fixbill
 
-You are running the FixBill workflow. Gather inputs and invoke the local
-`fixbill` CLI to produce a corrected PDF. Default to local-only output.
+You are running the FixBill workflow. Your job is to gather inputs, invoke the local `fixbill` CLI to produce a fixed PDF, then save it to Google Drive yourself using your Drive connector.
 
-The CLI does PDF work (masking + Thai-font redraw) and saves locally to
-`~/Downloads`. It has no cloud-storage integration. Never upload an original
-or edited customer document unless the user separately approves the exact local
-files and exact destination folder after the local result is verified.
+The CLI does the PDF work (masking + Thai-font redraw) and saves locally to `~/Downloads` — nothing else. It has no Google Drive integration of its own. **You are the Drive integration**: after the CLI succeeds, you use your own Google Drive connector tool (Claude's `Google Drive` MCP tools, or Codex's `google drive_*` connector tools) to upload the fixed PDF. This only happens when you (Claude or Codex) run the command — a bare terminal invocation of `fixbill` never touches Drive, because the Drive connector only exists inside an LLM CLI session.
 
 ## Updating
 
@@ -109,7 +105,7 @@ If it prints nothing or errors with `Could not find tsx at .../server/node_modul
    - Found → guide them:
      - macOS/Linux: `cd ~/fixbill-cli && sudo npm run setup`
      - Windows: `cd %USERPROFILE%\fixbill-cli && npm run setup` (no sudo)
-   - Not found → ask them to clone https://github.com/iampon-p/fixbill-cli, then run setup as above.
+   - Not found → ask them to clone https://github.com/iampon-p/agent-action-skills, then run setup as above.
 3. After they confirm setup is done, re-run `command -v fixbill` before continuing.
 
 **Windows note:** PowerShell/CMD paths (`C:\Users\<your-user>\...`) and Git Bash paths (`/c/Users/<your-user>/...`) are supported when the file exists. For direct terminal multi-line addresses, use Git Bash because the `$'line1\nline2'` newline syntax works there. Claude Code's Bash tool on Windows is Git Bash.
@@ -157,22 +153,23 @@ Stream output so the user sees progress. Typically takes 5–20 seconds.
 
 ## Step 3 — Verify and report
 
-- **Exit 0:** Confirm `~/Downloads/<original-name>_edit.pdf` exists with `ls -la`. Tell the user the local path. Stop there unless the user separately requests and approves a cloud upload.
+- **Exit 0:** Confirm `~/Downloads/<original-name>_edit.pdf` exists with `ls -la`. Tell the user the local path, then proceed to Step 4.
 - **Exit non-zero:** Show the last ~20 lines of CLI output. Don't retry with different arguments. Match against the failure table below. Skip Step 4 — there's nothing to upload.
 
-## Optional Step 4 — Upload only after exact approval
+## Step 4 — Save to Google Drive
 
-Do not infer upload approval from a request to fix a document. Before any cloud
-action, show a review line containing:
+The CLI never does this itself — it's your job, using whichever Drive connector tool is available in your session (Claude's `Google Drive` MCP tools, or Codex's `google drive_*` connector tools). Skip this step entirely if the user asked you to run `fixbill` from a plain terminal on their behalf without Claude/Codex acting as the front-end — but in a normal `/fixbill` invocation, always do it.
 
-- the exact original file path, exact edited file path, and whether each will be uploaded;
-- the exact cloud provider and destination folder;
-- the fact that customer documents leave the local machine.
+1. **Get the client name** from the CLI's stdout — it prints `Client Name detected: <name>` (both address-fix and field-fix modes print this line).
+2. **Get or create the client folder**: search for a folder named `<client>` inside a `fixbill` root folder (search/create the `fixbill` root first if it doesn't exist, then the client folder inside it). Use `parentId` search scoping — don't just match on name globally.
+3. **Check for same-day collision**: search the client folder for a file already named `DD-MM-YYYY-edit-<client>.pdf` (today's date). 
+   - **No collision** — upload directly into `/fixbill/<client>/`:
+     - `DD-MM-YYYY-edit-<client>.pdf` — the fixed PDF from `~/Downloads/<original-name>_edit.pdf`
+     - `DD-MM-YYYY-original-<client>.pdf` — the original PDF the user dropped in
+   - **Collision** (client already fixed a bill today) — instead of overwriting, create a `<client>-<time>` subfolder (e.g. `บริษัท ตัวอย่าง จำกัด-14-32-07`, 24h HH-MM-SS) inside `/fixbill/<client>/` and upload both files there with the same `DD-MM-YYYY-edit-<client>.pdf` / `DD-MM-YYYY-original-<client>.pdf` names.
+4. Report both Drive file links to the user alongside the local Downloads path.
 
-Proceed only when the user explicitly approves that exact set. Upload only the
-approved files to the approved folder, verify returned links, and report them.
-If approval is missing, the connector is unavailable, or a call fails, leave
-the verified local result in place and do not retry or create folders.
+If the Drive connector isn't authenticated or a call fails, tell the user the local file is still saved and ready — don't block on Drive, and don't retry more than once.
 
 ## Common failure modes
 
@@ -195,8 +192,8 @@ the verified local result in place and do not retry or create folders.
 - Don't modify the original PDF in place. The CLI saves to `~/Downloads/<name>_edit.pdf`.
 - Don't infer field values from the PDF — the user must provide them.
 - Don't retry on error with different arguments — diagnose first.
-- Don't upload customer documents by default. A fixing request is not upload approval.
-- Don't upload, create folders, or overwrite remote files when exact file/folder approval is absent.
+- Don't skip the Drive upload (Step 4) silently — either do it or tell the user why you didn't.
+- Don't overwrite a same-day Drive file for the same client — use the collision subfolder instead.
 
 ## Example sessions
 
@@ -205,42 +202,41 @@ User drops `QT-2026-0002.pdf` and says "change the title to ใบแจ้ง�
 1. `command -v fixbill` → path found ✓
 2. `fixbill "/path/QT-2026-0002.pdf" --title "ใบแจ้งหนี้"`
 3. Confirm `~/Downloads/QT-2026-0002_edit.pdf` → report path.
-4. Report the verified local file. Offer the optional exact-file upload review only if requested.
+4. Save to Drive (Step 4) → report Drive links.
 
 **Receipt number fix:**
 User says "change receipt number to REC-0001"
 1. `command -v fixbill` → path found ✓
 2. `fixbill "/path/Receipt.pdf" --receipt "REC-0001"`
 3. Confirm file → report path.
-4. Report the verified local file. Offer the optional exact-file upload review only if requested.
+4. Save to Drive (Step 4) → report Drive links.
 
 **Logo fix:**
-User drops `invoice.pdf` and drops a new logo image at `/path/to/logo.png`
+User drops `invoice.pdf` and drops a new logo image at `/Users/pon/logo.png`
 1. `command -v fixbill` → path found ✓
-2. `fixbill "/path/invoice.pdf" --logo "/path/to/logo.png"`
+2. `fixbill "/path/invoice.pdf" --logo "/Users/pon/logo.png"`
 3. Confirm file → report path.
-4. Report the verified local file and that the logo replaced the top-right area.
+4. Save to Drive (Step 4) → report Drive links. Tell user the logo replaced the top-right area.
 
 **Combined fix:**
 User says "fix date to 21/05/2026, invoice to INV-001, due date to 30/05/2026"
 1. `command -v fixbill` → path found ✓
 2. `fixbill "/path/Invoice.pdf" "21/05/2026" --invoice "INV-001" --due "30/05/2026"`
 3. Confirm file → report path.
-4. Report the verified local file. Offer the optional exact-file upload review only if requested.
+4. Save to Drive (Step 4) → report Drive links.
 
 **Date paid fix:**
 User says "mark this receipt as paid on 21/05/2026"
 1. `command -v fixbill` → path found ✓
 2. `fixbill "/path/Receipt.pdf" --date-paid "21/05/2026"`
 3. Confirm file → report path.
-4. Report the verified local file. Offer the optional exact-file upload review only if requested.
+4. Save to Drive (Step 4) → report Drive links.
 
 ---
 
 ## Tip — Save tokens: run fixbill directly in terminal
 
-If you already know the exact arguments, call the CLI directly. Direct terminal
-use always stays local-only, in `~/Downloads`.
+If you already know the exact arguments, you can skip Claude entirely and call the CLI directly. No tokens used. **No Google Drive save either** — the CLI has no Drive integration of its own; Drive save only happens when Claude or Codex runs the command and does the upload itself (Step 4). Direct terminal use always stays local-only, in `~/Downloads`.
 
 ```bash
 # Address fix (pre-structure the address yourself with \n)
@@ -253,6 +249,6 @@ fixbill "/path/receipt.pdf" "21/05/2026"
 fixbill "/path/receipt.pdf" "21/05/2026" --invoice "INV-001" --title "ใบแจ้งหนี้"
 ```
 
-Use Claude/Codex (/fixbill) when: address is unstructured, you want the assistant to turn it into clean address rows before running the CLI, or you're unsure which flags to use.
+Use Claude/Codex (/fixbill) when: address is unstructured, you want the assistant to turn it into clean address rows before running the CLI, you're unsure which flags to use, or you want it saved to Google Drive + error diagnosis.
 
 Use terminal directly when: you already know the exact command and have already structured any address line breaks yourself.

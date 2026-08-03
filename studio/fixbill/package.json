@@ -1,0 +1,21 @@
+{
+  "name": "fixbill-ai",
+  "private": true,
+  "bin": {
+    "fixbill": "bin/cli.js"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "setup": "node setup.js",
+    "install-skill": "node scripts/install-skill.js",
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "build": "npm run build --prefix client && npm run build --prefix server",
+    "typecheck": "npm run typecheck --prefix client && npm run typecheck --prefix server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

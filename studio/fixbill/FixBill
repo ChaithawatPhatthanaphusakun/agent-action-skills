@@ -1,0 +1,120 @@
+#!/bin/bash
+# fixbill — fix Thai invoice PDFs and sync to Google Drive
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
+show_help() {
+  echo ""
+  echo "fixbill — PDF invoice fixing tool"
+  echo ""
+  echo "Usage:"
+  echo "  fixbill help"
+  echo "      แสดงคำสั่งทั้งหมด"
+  echo ""
+  echo "  fixbill login"
+  echo "      เชื่อมต่อ Google Drive (ครั้งแรก)"
+  echo ""
+  echo "  fixbill login --reset"
+  echo "      เปลี่ยนบัญชี Google Drive"
+  echo ""
+  echo "  fixbill update"
+  echo "      อัพเดต fixbill เป็นเวอร์ชันล่าสุด"
+  echo ""
+  echo "  fixbill <path> <new-address>"
+  echo "      แก้ไขที่อยู่ลูกค้า (Bill-to block) และซิงค์ไปยัง Drive"
+  echo ""
+  echo "  fixbill <path> <DD/MM/YYYY>"
+  echo "      แก้ไขวันที่ออกบิล"
+  echo ""
+  echo "  fixbill <path> <date> --convert"
+  echo "      แก้ไขวันที่ + เปลี่ยนชื่อเป็น ใบแจ้งหนี้"
+  echo ""
+  echo "  fixbill <path> <date> --convert <title>"
+  echo "      แก้ไขวันที่ + เปลี่ยนชื่อเป็นชื่อที่กำหนดเอง"
+  echo ""
+  echo "  fixbill <path> --title <new-title>"
+  echo "      เปลี่ยนชื่อเอกสาร (ไม่ต้องระบุวันที่)"
+  echo ""
+  echo "  fixbill <path> --invoice-no <new-no>"
+  echo "      แก้ไขเลขที่ใบแจ้งหนี้ / Invoice number"
+  echo ""
+  echo "  fixbill <path> --receipt-no <new-no>"
+  echo "      แก้ไขเลขที่ใบเสร็จ / Receipt number"
+  echo ""
+  echo "  fixbill <path> --due-date <DD/MM/YYYY>"
+  echo "      แก้ไขวันที่ครบกำหนดชำระ"
+  echo ""
+  echo "  fixbill <path> --issuer <company>"
+  echo "      แก้ไขชื่อและที่อยู่บริษัทผู้ออกบิล (ฝั่งซ้าย) ทั้งบล็อก"
+  echo "      ใช้ \\\\n สำหรับขึ้นบรรทัดใหม่"
+  echo ""
+  echo "  fixbill <path> --company <name>"
+  echo "      แก้ไขเฉพาะชื่อบริษัท (บรรทัดแรกของผู้ออกบิล)"
+  echo ""
+  echo "  fixbill <path> --issuer-address <address>"
+  echo "      แก้ไขเฉพาะที่อยู่บริษัท (บรรทัดที่อยู่ใต้ชื่อบริษัท)"
+  echo ""
+  echo "  fixbill <path> --logo <image-path>"
+  echo "      เปลี่ยนโลโก้บริษัทมุมขวาบน (รองรับ PNG และ JPEG)"
+  echo ""
+  echo "Combine flags freely / รวมหลาย flag ได้ในคำสั่งเดียว:"
+  echo "  fixbill invoice.pdf 21/05/2026 --invoice-no INV-001 --due-date 30/05/2026"
+  echo "  fixbill invoice.pdf --title ใบแจ้งหนี้ --invoice-no INV-001"
+  echo "  fixbill receipt.pdf --receipt-no REC-001 --logo logo.png"
+  echo ""
+  echo "Notes / หมายเหตุ:"
+  echo "  - ใส่เครื่องหมาย \" รอบ path ที่มีช่องว่างหรือวงเล็บ: \"file (2).pdf\""
+  echo "  - วันที่ถูกแทนที่อัตโนมัติทุกจุดในเอกสาร"
+  echo "  - ไฟล์ที่แก้ไขแล้วบันทึกไว้ที่ ~/Downloads/<ชื่อไฟล์>_fixed.pdf"
+  echo ""
+}
+
+if [ "$1" = "help" ] || [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+  show_help
+  exit 0
+fi
+
+if [ "$1" = "login" ]; then
+  cd "$SCRIPT_DIR/server" || exit 1
+  npx tsx scripts/login.ts "${@:2}"
+  exit $?
+fi
+
+if [ "$1" = "update" ]; then
+  echo "Updating fixbill..."
+  cd "$SCRIPT_DIR" || exit 1
+  git pull origin main
+  npm install --prefix server --silent
+  echo "✅ fixbill updated successfully!"
+  exit 0
+fi
+
+if [ "$#" -lt 2 ]; then
+  show_help
+  exit 1
+fi
+
+ORIGINAL_DIR="$PWD"
+PDF_ARG="$1"
+SECOND_ARG="$2"
+
+# Detect field flags in any position
+HAS_FIELD_FLAGS=false
+for arg in "$@"; do
+  case "$arg" in
+    --invoice-no|--receipt-no|--due-date|--issuer|--convert|--title|--logo|--company|--issuer-address)
+      HAS_FIELD_FLAGS=true
+      break
+      ;;
+  esac
+done
+
+if [[ "$SECOND_ARG" =~ ^[0-9]{2}/[0-9]{2}/[0-9]{4}$ ]] || [ "$HAS_FIELD_FLAGS" = "true" ]; then
+  echo "Starting fixbill (field fix)..."
+  cd "$SCRIPT_DIR/server" || exit 1
+  npx tsx scripts/fixfields.ts "$ORIGINAL_DIR" "$PDF_ARG" "${@:2}"
+else
+  echo "Starting fixbill (address fix)..."
+  cd "$SCRIPT_DIR/server" || exit 1
+  npx tsx scripts/fixbill.ts "$ORIGINAL_DIR" "$PDF_ARG" "$SECOND_ARG"
+fi

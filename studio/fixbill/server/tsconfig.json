@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": ["ES2022"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "noEmit": false
+  },
+  "include": [
+    "src/index.ts",
+    "src/config/**/*.ts",
+    "src/routes/**/*.ts",
+    "src/services/googleDriveService.ts",
+    "src/services/pdfReceiptService.ts",
+    "src/utils/**/*.ts"
+  ],
+  "exclude": ["src/tests/**", "src/services/driveService.ts"]
+}

@@ -20,7 +20,7 @@ One command rewrites the Bill-to block: the old address is masked out and the ne
 
 | Before | After |
 |--------|-------|
-| ![Before](https://raw.githubusercontent.com/iampon-p/fixbill-cli/main/docs/images/before.png) | ![After](https://raw.githubusercontent.com/iampon-p/fixbill-cli/main/docs/images/after.png) |
+| ![Before](docs/images/before.png) | ![After](docs/images/after.png) |
 
 ---
 
@@ -162,7 +162,7 @@ fixbill receipt.pdf "21/05/2026" --receipt "REC-001" --logo "logo.png"
 > **Terminal notes:**
 > If the address text you want to insert has **spaces** or **line breaks**, you **must** wrap it in quotes `" "` (e.g., `"Company A Ltd"`). Without quotes, the terminal treats each word as a separate command and errors.
 >
-> PDF paths with spaces work if the file exists — e.g., `fixbill ~/Downloads/my invoice.pdf "tester"` automatically recombines the path into a single file.
+> PDF paths with spaces work if the file exists — e.g., `fixbill /Users/me/Downloads/my invoice.pdf "tester"` automatically recombines the path into a single file.
 >
 > Windows supports both PowerShell/CMD paths like `C:\Users\<your-user>\Downloads\my invoice.pdf` and Git Bash paths like `/c/Users/<your-user>/Downloads/my invoice.pdf` if the file exists.
 >

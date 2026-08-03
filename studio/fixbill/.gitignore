@@ -1,0 +1,69 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables - NEVER commit these
+.env
+.env.local
+.env.*.local
+**/.env
+
+# Build outputs
+dist/
+build/
+**/dist/
+server/dist/
+client/dist/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Lock files (optional: keep package-lock.json for reproducible installs)
+# package-lock.json
+
+# Output folder (generated PDFs - not source code)
+Output/*/
+
+# Real customer test PDFs (contain real company names + addresses — never commit)
+Test-issue-bill/
+
+# Local workflow-test fixture (real invoice PDF — never commit, repo is public)
+Reference/
+
+# Playwright test results
+client/test-results/
+test-results/
+.playwright-mcp/
+
+# Screenshots / debug images
+*.png
+*.jpeg
+# EXCEPT: docs/images/ contains demo/reference images for README
+!docs/images/*.png
+!docs/images/*.jpeg
+
+# User credentials (never commit)
+.fixbill/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Vite temp
+**/.vite-temp/
+.vercel
+.env*.local
+.aider*

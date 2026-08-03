@@ -37,6 +37,10 @@ def main(argv: list[str] | None = None) -> int:
         print("error: skill source path may not contain a symlink", file=sys.stderr)
         return 2
     source = (root / args.skill).resolve()
+    if not (source / "SKILL.md").is_file():
+        candidates = [p for p in root.rglob(args.skill) if p.is_dir() and (p / "SKILL.md").is_file()]
+        if len(candidates) == 1:
+            source = candidates[0].resolve()
     destination_parent = args.dest.expanduser().resolve()
     if not source.is_relative_to(root) or not (source / "SKILL.md").is_file():
         print("error: skill must name an installable package inside --root", file=sys.stderr)

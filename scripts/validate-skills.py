@@ -13,7 +13,8 @@ REQUIRED_ROOT_DOCS = {
     "CONTEXT.md", "SKILLS.md",
 }
 ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore", ".gitmodules"}
-ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"}
+CATEGORY_DIRECTORIES = {"dev", "hustle", "studio"}
+ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"} | CATEGORY_DIRECTORIES
 PACKAGE_CHILDREN = {"SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests"}
 TEXT_SUFFIXES = {".md", ".py", ".yaml", ".yml", ".sh", ".txt"}
 NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -55,22 +56,26 @@ def ignored(path: Path) -> bool:
 
 def package_paths(root: Path, errors: list[str]) -> list[Path]:
     packages: list[Path] = []
-    for child in sorted(root.iterdir()):
-        if child.name in ALLOWED_ROOT_DIRECTORIES:
-            continue
-        if not child.is_dir():
-            continue
-        if not (child / "SKILL.md").is_file():
-            add(errors, f"root directory must be a skill package with SKILL.md: {rel(root, child)}")
-            continue
-        packages.append(child)
-        for item in child.iterdir():
-            # A package may be a git submodule (its own repo): skip the
-            # submodule bookkeeping files it carries.
-            if item.name in {".git", ".gitignore", ".gitmodules"}:
+    category_dirs = [root / cat for cat in CATEGORY_DIRECTORIES if (root / cat).is_dir()]
+    # Check category directories or root for packages
+    search_dirs = category_dirs if category_dirs else [root]
+    for parent in sorted(search_dirs):
+        for child in sorted(parent.iterdir()):
+            if child.name in ALLOWED_ROOT_DIRECTORIES:
                 continue
-            if item.name not in PACKAGE_CHILDREN:
-                add(errors, f"unapproved package child: {rel(root, item)}")
+            if not child.is_dir():
+                continue
+            if not (child / "SKILL.md").is_file():
+                add(errors, f"directory must be a skill package with SKILL.md: {rel(root, child)}")
+                continue
+            packages.append(child)
+            for item in child.iterdir():
+                # A package may be a git submodule (its own repo): skip the
+                # submodule bookkeeping files it carries.
+                if item.name in {".git", ".gitignore", ".gitmodules"}:
+                    continue
+                if item.name not in PACKAGE_CHILDREN:
+                    add(errors, f"unapproved package child: {rel(root, item)}")
     return sorted(packages)
 
 

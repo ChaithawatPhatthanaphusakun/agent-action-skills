@@ -30,7 +30,9 @@ class RepositoryToolTests(unittest.TestCase):
         self.root.mkdir()
         for document in VALIDATOR.REQUIRED_ROOT_DOCS:
             (self.root / document).write_text(f"# {document}\n", encoding="utf-8")
-        package = self.root / "example-skill"
+        category = self.root / "dev"
+        category.mkdir()
+        package = category / "example-skill"
         package.mkdir()
         (package / "SKILL.md").write_text(
             "---\nname: example-skill\ndescription: Example test skill.\n---\n\n# Example\n",
@@ -39,7 +41,7 @@ class RepositoryToolTests(unittest.TestCase):
         (self.root / "SKILLS.md").write_text(
             "# Inventory\n\n| Install path | Status | Dependencies | Notes |\n"
             "| --- | --- | --- | --- |\n"
-            "| `example-skill` | curated | none | fixture |\n",
+            "| `dev/example-skill` | curated | none | fixture |\n",
             encoding="utf-8",
         )
 
@@ -64,7 +66,7 @@ class RepositoryToolTests(unittest.TestCase):
 
     def test_rejects_missing_root_doc_unknown_binary_and_inventory_mismatch(self) -> None:
         (self.root / "AGENTS.md").unlink()
-        (self.root / "example-skill" / "asset.bin").write_bytes(b"\x00\x01")
+        (self.root / "dev" / "example-skill" / "asset.bin").write_bytes(b"\x00\x01")
         (self.root / "SKILLS.md").write_text("# Inventory\n", encoding="utf-8")
         self.assertEqual(VALIDATOR.main([str(self.root)]), 1)
 
@@ -75,7 +77,7 @@ class RepositoryToolTests(unittest.TestCase):
         self.assertEqual(INSTALLER.main(args), 0)
         self.assertEqual(INSTALLER.main(args), 3)
         alias = self.root / "alias"
-        alias.symlink_to(self.root / "example-skill", target_is_directory=True)
+        alias.symlink_to(self.root / "dev" / "example-skill", target_is_directory=True)
         alias_args = ["alias", "--root", str(self.root), "--dest", str(destination)]
         self.assertEqual(INSTALLER.main(alias_args), 2)
 

@@ -6,6 +6,20 @@ Runs a structured debugging loop for hard bugs that won't quit.
 
 Walks through 6 phases: build a feedback loop (failing test, curl, CLI script, or browser automation), reproduce the bug, generate ranked hypotheses, instrument code, apply the fix, then regression-test. Each phase has clear checkpoints. Refuses to guess — if you cannot build a reproducible loop, the skill stops and asks for environment access or captured logs instead of proceeding blind.
 
+## Visual Diagnosis Loop
+
+```mermaid
+flowchart TD
+    Bug([Bug Reported]) --> P1[Phase 1: Build Feedback Loop]
+    P1 --> P2[Phase 2: Reproduce Bug]
+    P2 --> P3[Phase 3: Ranked Hypotheses 1..N]
+    P3 --> P4[Phase 4: Instrument Code & Test]
+    P4 -->|Hypothesis Rejected| P3
+    P4 -->|Root Cause Found| P5[Phase 5: Apply Targeted Fix]
+    P5 --> P6[Phase 6: Regression Test & Cleanup]
+    P6 --> Verified([Verified Clean Fix])
+```
+
 ## Example
 
 **You type:**

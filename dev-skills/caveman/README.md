@@ -6,6 +6,19 @@ Cuts response token usage ~75% by dropping filler words, articles, and pleasantr
 
 Enables ultra-compressed communication mode. Removes articles (a/an/the), filler words (just/really/basically), pleasantries (sure/certainly/of course), and hedging. Stays active every response until you say "stop caveman" or "normal mode". All technical terms, error quotes, and code blocks stay exact.
 
+## Visual Flow
+
+```mermaid
+graph TD
+    A[User Request /caveman] --> B{Caveman Mode Active?}
+    B -->|Yes| C[Compression Engine]
+    C --> C1[Remove Articles: a / an / the]
+    C --> C2[Remove Fillers: just / basically / sure]
+    C --> C3[Preserve Code & Error Traces Exactly]
+    C3 --> D[~75% Token Saved Response]
+    B -->|Stop| E[Return to Normal Mode]
+```
+
 ## Example
 
 **You type:**

@@ -6,6 +6,22 @@ Generates multiple radically different interface designs for a module to explore
 
 Based on "Design It Twice" — your first idea is unlikely to be the best. The skill spawns 3+ sub-agents in parallel. Each designs a different interface for the same problem with a different constraint (minimize methods, maximize flexibility, optimize for common case, or follow a specific paradigm). Then shows all designs side by side for comparison before you pick one.
 
+## Visual Architecture
+
+```mermaid
+flowchart TD
+    Req[Module Design Request] --> Skill[design-an-interface]
+    Skill --> Clarify[Clarifying Questions & Usage Specs]
+    Clarify --> SubAgents[Parallel Sub-Agents Spawn]
+    SubAgents --> A1[Agent 1: Minimal Methods 1-3]
+    SubAgents --> A2[Agent 2: Maximize Flexibility]
+    SubAgents --> A3[Agent 3: Optimize Common Case]
+    A1 --> Compare[Side-by-Side Interface Comparison]
+    A2 --> Compare
+    A3 --> Compare
+    Compare --> Final[Selected Deep Module Design]
+```
+
 ## Example
 
 **You type:**

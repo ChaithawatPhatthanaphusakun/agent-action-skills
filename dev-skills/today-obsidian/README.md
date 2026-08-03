@@ -6,6 +6,21 @@ Builds your daily cockpit note in Obsidian by carrying forward unchecked tasks a
 
 Reads from 5 fixed sources (yesterday's daily note, handoff files, skill loop tracker, focus hub, today's journal) and builds today's note with: a one-line status summary (done/in-progress/carried counts), a project priorities section, carried-over tasks marked stale if rolling 3+ days, and a project staleness check. Additive and idempotent — safe to re-run same day without duplicating or erasing your own scribbles. Classifies each carried task by reading terminal activity (git commits, session transcripts) to mark what's actually done vs still in progress.
 
+## Visual Cockpit Pipeline
+
+```mermaid
+flowchart TD
+    Trigger([/today-obsidian Command]) --> Sources[Read 5 Fixed Sources]
+    Sources --> Yest[Yesterday's Daily Note]
+    Sources --> Handoff[Handoff Files & Skill Trackers]
+    Sources --> Git[Git Commit & Terminal Activity]
+    Yest --> Classify[Classify Tasks: Done / In-Progress / Carried]
+    Handoff --> Classify
+    Git --> Classify
+    Classify --> Stale[Flag Stale Tasks 3+ Days]
+    Stale --> Build[Write Idempotent Obsidian Daily Note]
+```
+
 ## Example
 
 **You type:**

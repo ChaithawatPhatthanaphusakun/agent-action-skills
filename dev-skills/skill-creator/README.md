@@ -6,6 +6,18 @@ Scaffolds new Claude skills with proper structure in `~/.claude/skills/`.
 
 Creates a new skill folder with a SKILL.md file. First checks whether an existing skill should be extended instead of creating a sibling. Asks you for the skill name, one-sentence description, trigger phrases, required tools/APIs, and expected output. Then writes the skill folder, SKILL.md template, and confirms the skill is ready to invoke.
 
+## Visual Creation Pipeline
+
+```mermaid
+flowchart TD
+    Req[Skill Creation Request] --> Audit[Check Existing Local / Public Skills]
+    Audit --> Q[Interview User: Name, Trigger, Tools, Output]
+    Q --> Scaffold[Create ~/.claude/skills/<name>]
+    Scaffold --> Template[Generate SKILL.md Frontmatter & Spec]
+    Template --> Validate[Validate Frontmatter Syntax]
+    Validate --> Ready([Skill Ready to Invoke])
+```
+
 ## Example
 
 **You type:**

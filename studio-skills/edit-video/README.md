@@ -16,6 +16,19 @@ review at their own gates.
 No footage, music, voice sample, transcript, browser state, private work log,
 or machine-specific runtime workspace is included.
 
+## Visual Pipeline
+
+```mermaid
+flowchart TD
+    Source[Raw Video Clips] --> Inventory[Inventory & Contact Sheet]
+    Inventory --> CutList[Timestamped Cut Proposal]
+    CutList --> Preview[Low-Res Preview Render]
+    Preview --> Gate{Human Approval Gate}
+    Gate -->|Approved| Captions[Add Subtitles & Licensed Music]
+    Captions --> Final[Render Final Master MP4 & Cut List]
+    Gate -->|Revision Requested| CutList
+```
+
 ## Workflow
 
 1. Preserve and inventory the original clips.

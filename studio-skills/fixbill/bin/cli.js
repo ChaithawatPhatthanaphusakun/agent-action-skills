@@ -16,10 +16,13 @@ const isWindows = process.platform === 'win32';
 // spawnSync without a shell) and avoids shell:true (which would mangle
 // Thai addresses / paths containing spaces).
 function runTsx(args, opts = {}) {
-  const tsxCli = path.join(serverDir, 'node_modules', 'tsx', 'dist', 'cli.mjs');
+  let tsxCli = path.join(serverDir, 'node_modules', 'tsx', 'dist', 'cli.mjs');
+  if (!fs.existsSync(tsxCli)) {
+    tsxCli = path.join(repoDir, 'node_modules', 'tsx', 'dist', 'cli.mjs');
+  }
   if (!fs.existsSync(tsxCli)) {
     console.error(`❌ Could not find tsx at ${tsxCli}`);
-    console.error('   Run: npm install --prefix server  (from the fixbill-cli folder)');
+    console.error('   Run: npm install  (from the fixbill folder)');
     process.exit(1);
   }
   return spawnSync(process.execPath, [tsxCli, ...args], { stdio: 'inherit', ...opts });
@@ -86,8 +89,8 @@ function showDoctor() {
     },
     {
       label: 'server deps',
-      ok: fs.existsSync(path.join(serverDir, 'node_modules', 'tsx', 'dist', 'cli.mjs')),
-      value: path.join(serverDir, 'node_modules'),
+      ok: fs.existsSync(path.join(serverDir, 'node_modules', 'tsx', 'dist', 'cli.mjs')) || fs.existsSync(path.join(repoDir, 'node_modules', 'tsx', 'dist', 'cli.mjs')),
+      value: fs.existsSync(path.join(serverDir, 'node_modules', 'tsx', 'dist', 'cli.mjs')) ? path.join(serverDir, 'node_modules') : path.join(repoDir, 'node_modules'),
     },
     {
       label: 'Claude skill',

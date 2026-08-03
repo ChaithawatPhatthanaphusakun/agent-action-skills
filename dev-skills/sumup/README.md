@@ -6,6 +6,18 @@ Wraps up a session so nothing gets lost when switching to a new task or session.
 
 Reads the real conversation transcript, git diff, and filesystem state to reconstruct what was actually done this session. Writes a what/issue/fix/retrospective summary, saves a session note to Obsidian, updates project documentation (README, CLAUDE.md, AGENTS.md), saves a lesson to memory if one surfaced, and writes a paste-ready handoff prompt for a fresh session to continue exactly where this one ended.
 
+## Visual Closeout Flow
+
+```mermaid
+flowchart TD
+    End([Session Closeout /sumup]) --> Read[Read Transcript, Git Diff & Status]
+    Read --> Summary[Generate What / Issue / Fix Summary]
+    Summary --> Retrospective[Write Lessons & Retrospective]
+    Retrospective --> Memory[Save Memory Note to Vault]
+    Memory --> Obsidian[Save Session Note in Obsidian]
+    Obsidian --> Handoff[Generate Handoff Prompt & File]
+```
+
 ## Example
 
 **You type:**

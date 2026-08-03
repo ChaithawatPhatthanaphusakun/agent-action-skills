@@ -6,6 +6,21 @@ Scans a file or directory for hardcoded secrets, dangerous code patterns, and te
 
 Runs a pure-regex scanner (no network, no LLM) that finds hardcoded API keys, passwords, shell=True in subprocess calls, os.system() usage, TODO/FIXME markers, insecure HTTP URLs, and debug prints. Reports severity levels (HIGH = secrets/dangerous patterns, MEDIUM = code quality issues, LOW = style notes). No dependencies beyond Python standard library.
 
+## Visual Scanner Architecture
+
+```mermaid
+flowchart TD
+    File[Input Source File / Directory] --> Scan[Security Scanner Engine]
+    Scan --> R1[Regex 1: Hardcoded Secrets & Tokens]
+    Scan --> R2[Regex 2: Dangerous Call Patterns]
+    Scan --> R3[Regex 3: Tech Debt & TODO Markers]
+    R1 --> High[🔴 HIGH: Block Push]
+    R2 --> High
+    R3 --> Med[🟡 MEDIUM / LOW: Quality Note]
+    High --> Report[Structured Security Report]
+    Med --> Report
+```
+
 ## Example
 
 **You type:**

@@ -6,6 +6,19 @@ Interactive QA session where you describe bugs conversationally and the skill fi
 
 You report problems you found in the app. The skill listens, asks 2-3 clarifying questions (what you expected vs what happened, steps to reproduce, consistency). Then explores the codebase in the background to learn domain language and context. Decides whether to file one issue or break it into multiple independent issues. Files durable, user-focused GitHub issues using the project's vocabulary. Shares issue URLs back to you.
 
+## Visual QA Workflow
+
+```mermaid
+flowchart TD
+    User([User Reports Issue]) --> Interactive[Interactive Q&A Session]
+    Interactive --> Clarify[Ask Steps & Consistency]
+    Clarify --> Background[Background Codebase Probe]
+    Background --> Domain[Extract Domain Terminology]
+    Domain --> Issue[Structure User-Focused GitHub Issue]
+    Issue --> GH[File via GitHub CLI]
+    GH --> Output([Share Issue URL & Status])
+```
+
 ## Example
 
 **You type:**

@@ -13,7 +13,7 @@ REQUIRED_ROOT_DOCS = {
     "CONTEXT.md", "SKILLS.md",
 }
 ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore", ".gitmodules"}
-CATEGORY_DIRECTORIES = {"dev", "hustle", "studio"}
+CATEGORY_DIRECTORIES = {"dev-skills", "hustle-skills", "studio-skills"}
 ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"} | CATEGORY_DIRECTORIES
 PACKAGE_CHILDREN = {
     "SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests",
@@ -145,7 +145,7 @@ def validate_text(root: Path, path: Path, errors: list[str]) -> None:
         add(errors, f"binary file is forbidden: {relative}")
     if path.resolve() == Path(__file__).resolve():
         return
-    if (HOME_PATH.search(text) or PRIVATE_CONTENT.search(text)) and not relative.startswith("studio/fixbill/"):
+    if (HOME_PATH.search(text) or PRIVATE_CONTENT.search(text)) and not relative.startswith("studio-skills/fixbill/"):
         add(errors, f"private path/reference: {relative}")
     if STALE_FIXBILL.search(text):
         add(errors, f"stale FixBill repository URL: {relative}")

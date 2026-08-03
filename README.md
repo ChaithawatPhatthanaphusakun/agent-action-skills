@@ -17,7 +17,7 @@ Drop-in workflows for coding agents — each one a self-contained folder you can
 
 ## What this is
 
-Every skill is a **portable folder headed by a `SKILL.md`** — no build step, no runtime, no lock-in. An agent reads the `SKILL.md`, follows the workflow, and produces the result. Categories (`dev` / `hustle` / `studio`) are organizational only; nothing depends on them at runtime.
+Every skill is a **portable folder headed by a `SKILL.md`** — no build step, no runtime, no lock-in. An agent reads the `SKILL.md`, follows the workflow, and produces the result. Categories (`dev-skills` / `hustle-skills` / `studio-skills`) are organizational only; nothing depends on them at runtime.
 
 Three rules make the whole collection safe to publish and safe to install:
 
@@ -32,7 +32,7 @@ git clone https://github.com/iampon-p/agent-action-skills.git
 cd agent-action-skills
 
 # Install one skill into your agent's skills directory
-python3 scripts/install-skill.py dev/security-check --dest "$HOME/.claude/skills"
+python3 scripts/install-skill.py dev-skills/security-check --dest "$HOME/.claude/skills"
 
 # See everything available
 python3 scripts/list-skills.py

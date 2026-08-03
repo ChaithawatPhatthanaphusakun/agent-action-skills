@@ -11,9 +11,9 @@
 | `dev-skills/caveman` | curated | none | Compact communication mode |
 | `dev-skills/today-obsidian` | curated | configured notes vault | Daily cockpit workflow |
 | `hustle-skills/job-hunter` | curated | private candidate data | Evidence-backed job search |
-| `hustle-skills/linkedin-process-share` | curated | Git, public GitHub API | Immutable review-only post preview |
 | `studio-skills/video-doc-guide` | curated | scrcpy, ffmpeg (optional) | Privacy-safe product walkthrough videos |
 | `studio-skills/edit-video` | curated | local video tools | User-media editing workflow |
 | `studio-skills/fixbill` | curated | separate FixBill CLI | Local PDF correction workflow |
-| `hustle-skills/professional-presence` | curated | none | Privacy-safe professional profile and post management |
+| `hustle-skills/social-update` | curated | none | Consolidated social content, copywriting, marketing, and video production |
+| `hustle-skills/spy` | curated | Playwright, local browser | Competitor intelligence & browser market scanner |
 

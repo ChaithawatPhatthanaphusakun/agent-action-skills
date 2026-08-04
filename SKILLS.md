@@ -15,5 +15,5 @@
 | `studio-skills/edit-video` | curated | local video tools | User-media editing workflow |
 | `studio-skills/fixbill` | curated | separate FixBill CLI | Local PDF correction workflow |
 | `hustle-skills/social-update` | curated | none | Consolidated social content, copywriting, marketing, and video production |
-| `hustle-skills/spy` | curated | Playwright, local browser | Competitor intelligence & browser market scanner |
+| `hustle-skills/spy` | curated | Node.js >=22, Playwright, Python 3 + Pillow | Competitor intelligence & browser market scanner, bundled runnable pipeline |
 

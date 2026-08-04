@@ -5,6 +5,12 @@ description: Find, evaluate, tailor, apply to, and follow up on jobs using brows
 
 # Job Hunter
 
+> **Note:** if you also want LinkedIn/GitHub profile-presence management,
+> autonomous connection-request handling, and Gmail-based job-lead discovery
+> merged into the same workflow, that combined skill is called `career-pilot`.
+> This package stays the standalone job-search-only version for anyone who
+> doesn't want the larger merged workflow.
+
 Run a truthful, evidence-backed job search from discovery through follow-up. Keep
 personal data outside the skill and never trade application quality or factual
 accuracy for application volume.

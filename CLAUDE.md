@@ -33,7 +33,9 @@ installer, lister, tests) — distinct from a skill's own `scripts/` subfolder.
 ## Commands
 
 ```bash
-# Validate the whole contract (layout, naming, text-only rule, no home paths,
+# Validate the whole contract (layout, naming, allowed-suffix rule -- NOT
+# text-only, .js/.ts/.json/.cjs/.mjs/.ttf/.png and package.json are all
+# permitted, see scripts/validate-skills.py's TEXT_SUFFIXES -- no home paths,
 # no secrets, inventory matches folders) — run before proposing any change
 python3 scripts/validate-skills.py .
 

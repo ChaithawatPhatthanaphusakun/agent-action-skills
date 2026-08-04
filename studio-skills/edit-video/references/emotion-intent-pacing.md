@@ -71,6 +71,50 @@ Priority order is **privacy → meaning → continuity → rhythm → decoration
 - Prefer action completion or a shot change within ±120 ms of a strong approved
   beat when it helps; story and intelligible speech take priority over music.
 
+## Transition and effect suggestions
+
+These map the same controlled labels above to concrete ffmpeg-native choices
+for cut transitions and visual-emphasis effects. Like every other mapping in
+this file, these are **suggestions the human reviewer approves**, not
+automatic or silent choices — they slot into the same proposal/grade/approve
+loop as a keep/cut decision, and go in the decision record's `proposal`
+block alongside `zoom` and `beat_alignment`.
+
+### Transitions between two segments (ffmpeg `xfade`/`acrossfade`)
+
+| Story intent of the incoming segment | Suggested transition | Why |
+| --- | --- | --- |
+| `hook` → `context` | hard cut (no `xfade`) | Hooks need immediacy; a soft transition dilutes the opening beat. |
+| `context` → `setup`, `setup` → `process` | short `fade` or `fadeblack` (~150–250 ms) | Signals a settling, non-urgent scene change without implying time has jumped far. |
+| `process` → `process` (same task, later step) | `wipeleft`/`wiperight` or `slideleft`/`slideright` (~200 ms) | Directional wipes read as "next step," reinforcing procedural continuity. |
+| `setup`/`process` → `payoff` | hard cut or a very fast `fade` (<150 ms) | Payoffs land harder on a clean cut; a slow dissolve softens the reveal. |
+| `payoff` → `reaction` | hard cut | Preserve the immediacy of a genuine reaction; don't let a transition pre-empt it. |
+| `reaction`/`payoff` → `transition` (explicit scene/location change) | `dissolve`/`fade` (~300–400 ms) or `distance` | Longer dissolves read as a location or time jump, matching the `transition` label's own meaning. |
+| anything → `cta` | hard cut, sometimes with a brief `fadeblack` before on-screen text | Calls to action benefit from a clean, readable entry rather than a busy transition. |
+| `discard` | not used in the timeline | Discarded segments don't get a transition treatment at all. |
+
+Energy modulates duration, not choice: `quiet`/`steady` segments can take a
+slightly longer transition (250–400 ms); `rising`/`peak` segments should stay
+under ~150 ms or use a hard cut so the transition doesn't blunt momentum;
+`release` can take a longer, softer dissolve.
+
+### Visual-emphasis effects
+
+| Signal | Suggested effect | Why |
+| --- | --- | --- |
+| `energy: peak` + `intent: payoff` | subtle punch-in, per the existing 103–112% zoom rule above | Already defined above; repeated here so it reads alongside transition choices in one place. |
+| `intent: process`, low visual contrast between frames | slow ken-burns pan/zoom (105–110% over the segment) | Adds motion to otherwise static process footage without implying an emotional claim. |
+| `intent: hook`, `energy: quiet` or `steady` | none, or a very light vignette | Let the hook's content carry the moment; heavy effects on a hook read as compensating for a weak one. |
+| `intent: setup`/`context`, `speech act: explanation` | text-reveal timed to the transcript's phrase boundaries (not word-by-word) | Reinforces what's being said without overwhelming reading speed. |
+| `intent: transition` (explicit scene change) | brief subtle color-grade shift (e.g. slightly cooler/warmer) alongside the dissolve above | Reinforces the sense of a new location/time without changing footage content. |
+| `intent: reaction`, `expression: laugh`/`surprise-look` | none | Genuine reactions read best unedited; adding an effect here risks looking manufactured. |
+| `intent: cta` | steady framing, optional light vignette to draw eyes to on-screen text | Keeps focus on the action being requested rather than the visual. |
+
+As with keeps and cuts: low-confidence evidence (see "Evidence and
+confidence" above) may suggest an effect for review but must not trigger an
+automatic application, and privacy priority still outranks any decorative
+choice.
+
 ## Explainable decision record
 
 ```yaml

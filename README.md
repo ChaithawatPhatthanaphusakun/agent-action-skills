@@ -67,7 +67,6 @@ The installer refuses to overwrite an existing destination — so it can never c
 
 | Skill | What it does |
 | --- | --- |
-| [`video-doc-guide`](studio/video-doc-guide) | Privacy-safe product walkthrough videos with verified markers and captions |
 | [`edit-video`](studio/edit-video) | Cut raw clips, add captions, mix music, render a vertical reel via a local ffmpeg pipeline |
 | [`fixbill`](studio/fixbill) | Correct addresses, dates, and numbers on PDF invoices/receipts (Thai-aware) |
 

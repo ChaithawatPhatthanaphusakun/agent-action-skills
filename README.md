@@ -7,7 +7,7 @@
 Drop-in workflows for coding agents — each one a self-contained folder you can install into any agent's skills directory in a single command.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-informational.svg)](LICENSE)
-![Skills](https://img.shields.io/badge/skills-13-success.svg)
+![Skills](https://img.shields.io/badge/skills-8-success.svg)
 ![Text only](https://img.shields.io/badge/packages-text--only-blue.svg)
 ![Public safe](https://img.shields.io/badge/privacy-public--safe-brightgreen.svg)
 
@@ -32,7 +32,7 @@ git clone https://github.com/iampon-p/agent-action-skills.git
 cd agent-action-skills
 
 # Install one skill into your agent's skills directory
-python3 scripts/install-skill.py security-check --dest "$HOME/.claude/skills"
+python3 scripts/install-skill.py sumup --dest "$HOME/.claude/skills"
 
 # See everything available
 python3 scripts/list-skills.py
@@ -46,14 +46,9 @@ The installer refuses to overwrite an existing destination — so it can never c
 
 | Skill | What it does |
 | --- | --- |
-| [`diagnose`](diagnose) | Disciplined debugging loop: reproduce → minimise → hypothesise → fix → regression-test |
-| [`qa`](qa) | Turn conversational bug reports into durable, well-scoped GitHub issues |
-| [`security-check`](security-check) | Zero-token regex scan for secrets, dangerous patterns, and tech-debt markers |
-| [`design-an-interface`](design-an-interface) | Explore several radically different interface shapes before committing |
 | [`skill-creator`](skill-creator) | Scaffold a new, correctly-structured skill package |
 | [`sumup`](sumup) | Wrap up a work session into a clean handoff + next-step summary |
 | [`today-obsidian`](today-obsidian) | Build a daily "cockpit" note that carries forward open tasks |
-| [`caveman`](caveman) | Ultra-compact communication mode — ~75% fewer tokens, full technical accuracy |
 
 ### 🎯 `hustle` — evidence-backed career
 

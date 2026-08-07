@@ -20,7 +20,7 @@ with per-skill dependencies/status is in `SKILLS.md`.
 
 ## Repository structure
 
-Skill packages (14 total) are organized directly at the repo root. A package may contain only: `SKILL.md` (required),
+Skill packages (9 total) are organized directly at the repo root. A package may contain only: `SKILL.md` (required),
 `README.md`, `agents/`, `scripts/`, `references/`, `assets/`, `tests/`.
 Nothing else is allowed at the repo root besides the skill directories,
 `scripts/`, `.github/`, and the required root docs (`README.md`, `LICENSE`,
@@ -46,14 +46,11 @@ python3 scripts/list-skills.py --format table
 
 # Install one skill into a destination skills directory (copy-only, additive,
 # refuses to overwrite an existing target, refuses symlinked sources)
-python3 scripts/install-skill.py security-check --dest "$HOME/.claude/skills"
+python3 scripts/install-skill.py sumup --dest "$HOME/.claude/skills"
 
 # Per-skill test suites (not all skills have one; these two do)
 python3 job-hunter/scripts/test_job_hunter.py
 python3 linkedin-process-share/scripts/test_build_review_packet.py
-
-# Zero-token regex security scan (must show no 🔴 HIGH findings)
-python3 security-check/scripts/security_scan.py .
 ```
 
 CI (`.github/workflows/validate-skills.yml`) runs all of the above on every

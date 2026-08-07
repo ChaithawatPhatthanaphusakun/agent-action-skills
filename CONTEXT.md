@@ -1,6 +1,6 @@
 # Context
 
-`iampon-p/skills` is the curated public discovery and installation surface for
+`ChaithawatPon/agent-action-skills` is the curated public discovery and installation surface for
 generic agent workflows. It is not a mirror of any private skills directory.
 
 Packages use a flat layout: each skill is one top-level directory directly

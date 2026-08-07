@@ -105,7 +105,7 @@ If it prints nothing or errors with `Could not find tsx at .../server/node_modul
    - Found → guide them:
      - macOS/Linux: `cd ~/fixbill-cli && sudo npm run setup`
      - Windows: `cd %USERPROFILE%\fixbill-cli && npm run setup` (no sudo)
-   - Not found → ask them to clone https://github.com/iampon-p/agent-action-skills, then run setup as above.
+   - Not found → ask them to clone https://github.com/ChaithawatPon/agent-action-skills, then run setup as above.
 3. After they confirm setup is done, re-run `command -v fixbill` before continuing.
 
 **Windows note:** PowerShell/CMD paths (`C:\Users\<your-user>\...`) and Git Bash paths (`/c/Users/<your-user>/...`) are supported when the file exists. For direct terminal multi-line addresses, use Git Bash because the `$'line1\nline2'` newline syntax works there. Claude Code's Bash tool on Windows is Git Bash.

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this repository is
 
-`iampon-p/agent-action-skills` is a curated, public-safe library of portable **agent skill
+`ChaithawatPon/agent-action-skills` is a curated, public-safe library of portable **agent skill
 packages** — drop-in workflows for coding agents (Claude, Codex, etc.). Each
 skill is a self-contained folder headed by a `SKILL.md`; an agent reads it,
 follows the workflow, and produces the result. There is no build step and no
@@ -20,7 +20,7 @@ with per-skill dependencies/status is in `SKILLS.md`.
 
 ## Repository structure
 
-Skill packages (9 total) are organized directly at the repo root. A package may contain only: `SKILL.md` (required),
+Skill packages (7 total) are organized directly at the repo root. A package may contain only: `SKILL.md` (required),
 `README.md`, `agents/`, `scripts/`, `references/`, `assets/`, `tests/`.
 Nothing else is allowed at the repo root besides the skill directories,
 `scripts/`, `.github/`, and the required root docs (`README.md`, `LICENSE`,
@@ -48,9 +48,8 @@ python3 scripts/list-skills.py --format table
 # refuses to overwrite an existing target, refuses symlinked sources)
 python3 scripts/install-skill.py sumup --dest "$HOME/.claude/skills"
 
-# Per-skill test suites (not all skills have one; these two do)
+# Per-skill test suites (not all skills have one)
 python3 job-hunter/scripts/test_job_hunter.py
-python3 linkedin-process-share/scripts/test_build_review_packet.py
 ```
 
 CI (`.github/workflows/validate-skills.yml`) runs all of the above on every
@@ -65,9 +64,12 @@ folders.
 
 - Frontmatter is **exactly** `name` + `description`, and `name` must equal the
   package's directory name (kebab-case, unique across the repo).
-- Text-only: every tracked file must be UTF-8 and either a required root doc
-  or have a suffix in `{.md, .py, .yaml, .yml, .sh, .txt}` — no binaries, no
-  vendored media, no lockfiles.
+- Every tracked file must be UTF-8 and either a required root doc or have a
+  suffix in `TEXT_SUFFIXES` (`scripts/validate-skills.py`) — `.md, .py,
+  .yaml, .yml, .sh, .txt, .js, .ts, .json, .ttf, .png, .cjs, .mjs, .example,
+  .gitkeep`. Not text-only despite the name: small binary assets (fonts,
+  images) and JS/TS package files are allowed; vendored media and lockfiles
+  are not.
 - No symlinks anywhere in the tree.
 - No absolute `/Users/...` or `/home/...` paths, no flagged private-content
   phrases, no plausible hardcoded secret/token values (a few safe-context
@@ -82,8 +84,8 @@ the validator before committing.
 
 ## Publishing boundary
 
-This repo publishes **workflows**, not actions. `linkedin-process-share` and
-`job-hunter` in particular are structured so that drafting/reviewing is
-in-repo, but publishing, sending, applying, or editing an external profile
-always requires a separate, explicit approval step defined by that skill —
-never assume a draft is authorization to act.
+This repo publishes **workflows**, not actions. `job-hunter` in particular is
+structured so that drafting/reviewing is in-repo, but publishing, sending,
+applying, or editing an external profile always requires a separate,
+explicit approval step defined by that skill — never assume a draft is
+authorization to act.

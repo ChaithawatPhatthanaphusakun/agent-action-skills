@@ -37,8 +37,8 @@ One command rewrites the Bill-to block: the old address is masked out and the ne
 ### macOS / Linux
 
 ```bash
-git clone https://github.com/iampon-p/fixbill-cli.git ~/fixbill-cli
-cd ~/fixbill-cli
+git clone https://github.com/ChaithawatPon/agent-action-skills.git ~/fixbill-cli
+cd ~/fixbill-cli/fixbill
 sudo npm run setup
 ```
 
@@ -49,8 +49,8 @@ sudo npm run setup
 Open **Command Prompt** or **PowerShell** (no need to run as Administrator):
 
 ```bat
-git clone https://github.com/iampon-p/fixbill-cli.git %USERPROFILE%\fixbill-cli
-cd %USERPROFILE%\fixbill-cli
+git clone https://github.com/ChaithawatPon/agent-action-skills.git %USERPROFILE%\fixbill-cli
+cd %USERPROFILE%\fixbill-cli\fixbill
 npm run setup
 ```
 
@@ -79,7 +79,7 @@ fixbill doctor        # Check CLI + server deps + Claude skill
 
 Open Claude Code and type `/fixbill` — if the slash command appears, the skill installed successfully.
 
-If `/fixbill` does not appear, run `npm run install-skill` from the fixbill-cli folder and open Claude Code again.
+If `/fixbill` does not appear, run `npm run install-skill` from the `fixbill-cli/fixbill` folder and open Claude Code again.
 
 ---
 
@@ -295,9 +295,9 @@ fixbill-cli/
 |---|---|
 | **Windows:** `fixbill.ps1 cannot be loaded because running scripts is disabled on this system` (policy error) | PowerShell is blocking scripts — run once (no admin needed): `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` then open PowerShell again — or use **Command Prompt (cmd)** instead. |
 | **Windows:** `npm : File ...npm.ps1 cannot be loaded` when running `npm run setup` | Same issue (ExecutionPolicy) — use the fix above or run setup in cmd. |
-| `command not found: fixbill` | macOS/Linux: `cd ~/fixbill-cli && sudo npm link` — Windows: `cd %USERPROFILE%\fixbill-cli && npm link` |
+| `command not found: fixbill` | macOS/Linux: `cd ~/fixbill-cli/fixbill && sudo npm link` — Windows: `cd %USERPROFILE%\fixbill-cli\fixbill && npm link` |
 | `command not found` after moving the folder | `npm link` still points to the old location — run `npm link` from the new path (macOS/Linux add `sudo`). |
-| `/fixbill` does not appear in Claude Code | Run `npm run install-skill` from the fixbill-cli folder and open Claude Code again. |
+| `/fixbill` does not appear in Claude Code | Run `npm run install-skill` from the `fixbill-cli/fixbill` folder and open Claude Code again. |
 | `Invoice number label not found` | The PDF does not contain the words 'เลขที่', 'Invoice', 'No.', etc. on the page. |
 | `Receipt number label not found` | The PDF does not contain 'เลขที่ใบเสร็จ' or 'Receipt'. |
 | `Due date label not found` | The PDF does not have a 'วันครบกำหนด' field to edit. |

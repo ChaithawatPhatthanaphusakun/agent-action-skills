@@ -58,8 +58,8 @@ python3 edit-video/scripts/test_fixture_smoke.py
 ## Install
 
 ```bash
-git clone https://github.com/iampon-p/skills.git
-cd skills
+git clone https://github.com/ChaithawatPon/agent-action-skills.git
+cd agent-action-skills
 python3 scripts/install-skill.py edit-video --dest <skills-directory>
 ```
 

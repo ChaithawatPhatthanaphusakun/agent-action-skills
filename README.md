@@ -17,7 +17,7 @@ Drop-in workflows for coding agents — each one a self-contained folder you can
 
 ## What this is
 
-Every skill is a **portable folder headed by a `SKILL.md`** — no build step, no runtime, no lock-in. An agent reads the `SKILL.md`, follows the workflow, and produces the result. Categories (`dev-skills` / `hustle-skills` / `studio-skills`) are organizational only; nothing depends on them at runtime.
+Every skill is a **portable folder headed by a `SKILL.md`** — no build step, no runtime, no lock-in. An agent reads the `SKILL.md`, follows the workflow, and produces the result.
 
 Three rules make the whole collection safe to publish and safe to install:
 
@@ -32,7 +32,7 @@ git clone https://github.com/iampon-p/agent-action-skills.git
 cd agent-action-skills
 
 # Install one skill into your agent's skills directory
-python3 scripts/install-skill.py dev-skills/security-check --dest "$HOME/.claude/skills"
+python3 scripts/install-skill.py security-check --dest "$HOME/.claude/skills"
 
 # See everything available
 python3 scripts/list-skills.py
@@ -46,29 +46,29 @@ The installer refuses to overwrite an existing destination — so it can never c
 
 | Skill | What it does |
 | --- | --- |
-| [`diagnose`](dev/diagnose) | Disciplined debugging loop: reproduce → minimise → hypothesise → fix → regression-test |
-| [`qa`](dev/qa) | Turn conversational bug reports into durable, well-scoped GitHub issues |
-| [`security-check`](dev/security-check) | Zero-token regex scan for secrets, dangerous patterns, and tech-debt markers |
-| [`design-an-interface`](dev/design-an-interface) | Explore several radically different interface shapes before committing |
-| [`skill-creator`](dev/skill-creator) | Scaffold a new, correctly-structured skill package |
-| [`sumup`](dev/sumup) | Wrap up a work session into a clean handoff + next-step summary |
-| [`today-obsidian`](dev/today-obsidian) | Build a daily "cockpit" note that carries forward open tasks |
-| [`caveman`](dev/caveman) | Ultra-compact communication mode — ~75% fewer tokens, full technical accuracy |
+| [`diagnose`](diagnose) | Disciplined debugging loop: reproduce → minimise → hypothesise → fix → regression-test |
+| [`qa`](qa) | Turn conversational bug reports into durable, well-scoped GitHub issues |
+| [`security-check`](security-check) | Zero-token regex scan for secrets, dangerous patterns, and tech-debt markers |
+| [`design-an-interface`](design-an-interface) | Explore several radically different interface shapes before committing |
+| [`skill-creator`](skill-creator) | Scaffold a new, correctly-structured skill package |
+| [`sumup`](sumup) | Wrap up a work session into a clean handoff + next-step summary |
+| [`today-obsidian`](today-obsidian) | Build a daily "cockpit" note that carries forward open tasks |
+| [`caveman`](caveman) | Ultra-compact communication mode — ~75% fewer tokens, full technical accuracy |
 
 ### 🎯 `hustle` — evidence-backed career
 
 | Skill | What it does |
 | --- | --- |
-| [`job-hunter`](hustle/job-hunter) | Find, evaluate, tailor, apply, and follow up — driven by verified resume evidence and a private ledger |
-| [`linkedin-process-share`](hustle/linkedin-process-share) | Build an immutable, review-only preview of a LinkedIn post before it goes out |
-| [`professional-presence`](hustle/professional-presence) | Manage privacy-safe professional profiles, LinkedIn posts, and GitHub identity presentation |
+| [`job-hunter`](job-hunter) | Find, evaluate, tailor, apply, and follow up — driven by verified resume evidence and a private ledger |
+| [`linkedin-process-share`](linkedin-process-share) | Build an immutable, review-only preview of a LinkedIn post before it goes out |
+| [`professional-presence`](professional-presence) | Manage privacy-safe professional profiles, LinkedIn posts, and GitHub identity presentation |
 
 ### 🎬 `studio` — produce artifacts
 
 | Skill | What it does |
 | --- | --- |
-| [`edit-video`](studio/edit-video) | Cut raw clips, add captions, mix music, render a vertical reel via a local ffmpeg pipeline |
-| [`fixbill`](studio/fixbill) | Correct addresses, dates, and numbers on PDF invoices/receipts (Thai-aware) |
+| [`edit-video`](edit-video) | Cut raw clips, add captions, mix music, render a vertical reel via a local ffmpeg pipeline |
+| [`fixbill`](fixbill) | Correct addresses, dates, and numbers on PDF invoices/receipts (Thai-aware) |
 
 Full inventory with dependencies in [SKILLS.md](SKILLS.md).
 

@@ -2,16 +2,16 @@
 
 | Install path | Status | Dependencies | Notes |
 | --- | --- | --- | --- |
-| `dev-skills/diagnose` | curated | none | Debugging workflow |
-| `dev-skills/design-an-interface` | curated | none | Interface design exploration |
-| `dev-skills/qa` | curated | `gh` CLI | Issue-oriented QA workflow |
-| `dev-skills/security-check` | curated | Python standard library | Local security scan |
-| `dev-skills/skill-creator` | curated | Python | Skill scaffolding guidance |
-| `dev-skills/sumup` | curated | optional notes vault | Development-session handoff |
-| `dev-skills/caveman` | curated | none | Compact communication mode |
-| `dev-skills/today-obsidian` | curated | configured notes vault | Daily cockpit workflow |
-| `hustle-skills/job-hunter` | curated | private candidate data | Evidence-backed job search |
-| `studio-skills/edit-video` | curated | local video tools | User-media editing workflow |
-| `studio-skills/fixbill` | curated | separate FixBill CLI | Local PDF correction workflow |
-| `hustle-skills/social-update` | curated | none | Consolidated social content, copywriting, marketing, and video production |
+| `diagnose` | curated | none | Debugging workflow |
+| `design-an-interface` | curated | none | Interface design exploration |
+| `qa` | curated | `gh` CLI | Issue-oriented QA workflow |
+| `security-check` | curated | Python standard library | Local security scan |
+| `skill-creator` | curated | Python | Skill scaffolding guidance |
+| `sumup` | curated | optional notes vault | Development-session handoff |
+| `caveman` | curated | none | Compact communication mode |
+| `today-obsidian` | curated | configured notes vault | Daily cockpit workflow |
+| `job-hunter` | curated | private candidate data | Evidence-backed job search |
+| `edit-video` | curated | local video tools | User-media editing workflow |
+| `fixbill` | curated | separate FixBill CLI | Local PDF correction workflow |
+| `social-update` | curated | none | Consolidated social content, copywriting, marketing, and video production |
 

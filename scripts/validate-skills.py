@@ -13,8 +13,7 @@ REQUIRED_ROOT_DOCS = {
     "CONTEXT.md", "SKILLS.md",
 }
 ALLOWED_ROOT_FILES = REQUIRED_ROOT_DOCS | {".gitignore", ".gitmodules"}
-CATEGORY_DIRECTORIES = {"dev-skills", "hustle-skills", "studio-skills"}
-ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"} | CATEGORY_DIRECTORIES
+ALLOWED_ROOT_DIRECTORIES = {".github", "scripts", ".git"}
 PACKAGE_CHILDREN = {
     "SKILL.md", "README.md", "agents", "scripts", "references", "assets", "tests",
     "bin", "server", "docs", "package.json", "package-lock.json", "setup.js",
@@ -63,10 +62,8 @@ def ignored(path: Path) -> bool:
 
 def package_paths(root: Path, errors: list[str]) -> list[Path]:
     packages: list[Path] = []
-    category_dirs = [root / cat for cat in CATEGORY_DIRECTORIES if (root / cat).is_dir()]
-    # Check category directories or root for packages
-    search_dirs = category_dirs if category_dirs else [root]
-    for parent in sorted(search_dirs):
+    # Search root directory for skill packages
+    for parent in [root]:
         for child in sorted(parent.iterdir()):
             if child.name in ALLOWED_ROOT_DIRECTORIES:
                 continue
@@ -145,7 +142,7 @@ def validate_text(root: Path, path: Path, errors: list[str]) -> None:
         add(errors, f"binary file is forbidden: {relative}")
     if path.resolve() == Path(__file__).resolve():
         return
-    if (HOME_PATH.search(text) or PRIVATE_CONTENT.search(text)) and not relative.startswith("studio-skills/fixbill/"):
+    if (HOME_PATH.search(text) or PRIVATE_CONTENT.search(text)) and not relative.startswith("fixbill/"):
         add(errors, f"private path/reference: {relative}")
     if STALE_FIXBILL.search(text):
         add(errors, f"stale FixBill repository URL: {relative}")
